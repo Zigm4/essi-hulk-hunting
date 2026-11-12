@@ -1,6 +1,15 @@
 {
- "_doc": "Hand-kept public intelligence merged into docs/data/survey.json by tools/build_survey.py. hulks: notes per !enter code. extra_hulks: hulks not visible in the archive (own log). players: facts not readable in #spacecraft. gaps: archive holes. DM reports go to data/private.json (git-ignored).",
- "hulks": {},
+ "_doc": "Hand-kept public intelligence merged into docs/data/survey.json by tools/build_survey.py. hulks: notes per !enter code, and \"probable\": [oc, rc] with confidence and evidence when a position is deduced. extra_hulks: hulks not visible in the archive (own log). players: facts not readable in #spacecraft. gaps: archive holes. DM reports go to data/private.json (git-ignored).",
+ "hulks": {
+  "qnxs-01": {
+   "probable": [
+    5,
+    77
+   ],
+   "confidence": "very high",
+   "evidence": "Deduced from open-space exits: bartleby decoded the cipher on 08/11 at 10:47, flew in SLOW to stop exactly on Oc 5 / Rc 77 and left his vessel there at 16:06 with an intact hull; Horst (SOLT-10) exited at the same point 30 min earlier; MakerJay (SOSS-03) made the same precise approach on 11/11 and exited there twice; Roxy's two sweeps at Rc 77 and 82 that day got no reply."
+  }
+ },
  "extra_hulks": [
   {
    "code": "qnxs-03",

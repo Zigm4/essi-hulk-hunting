@@ -118,6 +118,18 @@
    "body": [
     "SOLT-04 fitted a Salvage Scanner on hardpoint 4 on 11/11 at 23:15. Its first two sweeps on 12/11, from Oc 2 / Rc 30 and Oc 2 / Rc 17, came back empty: no derelict in Oc 2 below Rc 62 that morning."
    ]
+  },
+  {
+   "id": "FN-014",
+   "date": "2026-11-12",
+   "tag": "Derelicts",
+   "confidence": "likely",
+   "title": "qnxs-01 located at Oc 5 / Rc 77",
+   "body": [
+    "bartleby decoded qnxs-01 on 08/11 at 10:47. That afternoon he flew to Rc 78, switched to SLOW (`.31`), stepped to exactly Oc 5 / Rc 77 and left his vessel into open space at 16:06 (`You have disembarked to \"Outer Space\" Zone:0`) with an intact hull. Horst (SOLT-10) had exited at the very same point 30 minutes earlier.",
+    "On 11/11 MakerJay (SOSS-03) made the same precise approach (FAST to Rc 78, SLOW, one step to Rc 77, defence lever on) and exited there, then came back injured and exited there again on 12/11. Roxy's sweeps from Rc 77 and 82 on 08/11 got no reply, the usual sign of a hit.",
+    "How to read exits: most open-space exits are repairs. A vessel that loses a fight with pirates drops to 0 hull and the bot says `is damaged (0/80). You will have to !exit the vessel to !repair it`. A boarding looks different: intact hull, slow approach to an exact Rc, then `!exit`."
+   ]
   }
  ]
 }

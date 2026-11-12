@@ -25,7 +25,13 @@
   const unanswered = sweeps.filter(x => x.result !== 'empty');
   const openTri = (S.open_triangulations || []).map((t, i) => ({...t, id: `open-${i}`}));
   const RANGE = S.scanner.range;
-  const RMAX = Math.max(240, ...hulks.map(h => h.pos.rc + 30), ...sweeps.map(x => x.rc + RANGE + 10));
+  // Radial scale: linear up to RC_LIN (where every contact sits), logarithmic beyond so the outer
+  // planets (Saturn ~290, Uranus ~600, Neptune ~930 SL) fit inside the chart up to RC_OUT.
+  const RC_LIN = 250, RC_OUT = 1000, LOG_K = 110 / Math.log(RC_OUT / RC_LIN);
+  const fr = rc => (rc <= RC_LIN ? rc : RC_LIN + LOG_K * Math.log(rc / RC_LIN));
+  const frInv = w => (w <= RC_LIN ? w : RC_LIN * Math.exp((w - RC_LIN) / LOG_K));
+  const W_MAX = fr(RC_OUT);
+  const polarW = (oc, rc) => E.toXY(oc, fr(rc));
 
   // Signallers get a colour in order of their first triangulation (stable when new players appear).
   const firstSeen = new Map();
@@ -86,13 +92,13 @@
   const tip = document.getElementById('tip');
   let W = 800, H = 800;
   let cursorText = '-';
-  const base = () => (Math.min(W, H) / 2 - 44) / RMAX;
+  const base = () => (Math.min(W, H) / 2 - 44) / W_MAX;
   const scale = () => base() * st.k;
   const toS = (x, y) => [W / 2 + (x - st.cx) * scale(), H / 2 + (y - st.cy) * scale()];
   const toW = (sx, sy) => [(sx - W / 2) / scale() + st.cx, (sy - H / 2) / scale() + st.cy];
-  const polarS = (oc, rc) => { const p = E.toXY(oc, rc); return toS(p.x, p.y); };
+  const polarS = (oc, rc) => { const p = polarW(oc, rc); return toS(p.x, p.y); };
   // Planets use their real ecliptic longitude; sector k spans longitudes [30(k-1), 30k).
-  const lonXY = (lon, sl) => { const a = (lon + 75) * Math.PI / 180; return {x: sl * Math.cos(a), y: -sl * Math.sin(a)}; };
+  const lonXY = (lon, sl) => { const a = (lon + 75) * Math.PI / 180, r = fr(sl); return {x: r * Math.cos(a), y: -r * Math.sin(a)}; };
   const f1 = n => n.toFixed(1);
 
   // ---- time & visibility ---------------------------------------------------------------------
@@ -125,6 +131,7 @@
     const a0 = E.angle(oc) - Math.PI / 12, a1 = E.angle(oc) + Math.PI / 12, s = scale();
     const [sx, sy] = toS(0, 0);
     const p = (r, a) => `${f1(sx + r * s * Math.cos(a))} ${f1(sy - r * s * Math.sin(a))}`;
+    r0 = fr(r0); r1 = fr(r1);
     return `M ${p(r0, a0)} A ${f1(r0 * s)} ${f1(r0 * s)} 0 0 0 ${p(r0, a1)} L ${p(r1, a1)} A ${f1(r1 * s)} ${f1(r1 * s)} 0 0 1 ${p(r1, a0)} Z`;
   }
   const hulkFill = h => (h.hull_color ? E.qColor(h.hull_color) : 'var(--bg)');
@@ -143,15 +150,23 @@
     const s = scale();
     const [sunX, sunY] = toS(0, 0);
     const step = st.k >= 8 ? 10 : st.k >= 3 ? 25 : 50;
-    for (let rc = step; rc <= RMAX; rc += step) {
+    for (let rc = step; rc < RC_LIN; rc += step) {
       const major = rc % 50 === 0;
       out.push(`<circle cx="${f1(sunX)}" cy="${f1(sunY)}" r="${f1(rc * s)}" fill="none" stroke="${major ? 'var(--line)' : 'var(--grid)'}" stroke-width="${major ? 1 : 0.7}"/>`);
       if (major || st.k >= 3) { const [lx, ly] = polarS(1, rc); out.push(`<text x="${f1(lx + 4)}" y="${f1(ly - 3)}" font-size="10" fill="var(--dim)">Rc ${rc}</text>`); }
     }
+    // scale change, then logarithmic rings for the outer system
+    out.push(`<circle cx="${f1(sunX)}" cy="${f1(sunY)}" r="${f1(RC_LIN * s)}" fill="none" stroke="var(--line)" stroke-width="1.2" stroke-dasharray="6 4"/>`);
+    { const [lx, ly] = polarS(1, RC_LIN); out.push(`<text x="${f1(lx + 4)}" y="${f1(ly - 3)}" font-size="10" fill="var(--dim)">Rc ${RC_LIN} · log scale beyond</text>`); }
+    for (const rc of [400, 600, 1000]) {
+      out.push(`<circle cx="${f1(sunX)}" cy="${f1(sunY)}" r="${f1(fr(rc) * s)}" fill="none" stroke="var(--grid)" stroke-width="0.8"/>`);
+      const [lx, ly] = polarS(1, rc);
+      out.push(`<text x="${f1(lx + 4)}" y="${f1(ly - 3)}" font-size="10" fill="var(--dim)">Rc ${rc}</text>`);
+    }
     for (let oc = 1; oc <= 12; oc++) {
       const a = E.angle(oc) + Math.PI / 12;
-      out.push(`<line x1="${f1(sunX)}" y1="${f1(sunY)}" x2="${f1(sunX + RMAX * s * Math.cos(a))}" y2="${f1(sunY - RMAX * s * Math.sin(a))}" stroke="var(--grid)" stroke-width="1"/>`);
-      const lr = RMAX * s + 20, la = E.angle(oc);
+      out.push(`<line x1="${f1(sunX)}" y1="${f1(sunY)}" x2="${f1(sunX + W_MAX * s * Math.cos(a))}" y2="${f1(sunY - W_MAX * s * Math.sin(a))}" stroke="var(--grid)" stroke-width="1"/>`);
+      const lr = W_MAX * s + 20, la = E.angle(oc);
       const lx = sunX + lr * Math.cos(la), ly = sunY - lr * Math.sin(la);
       out.push(`<text x="${f1(lx)}" y="${f1(ly - 1)}" text-anchor="middle" font-size="13" fill="var(--accent)">${oc}</text>`);
       out.push(`<text x="${f1(lx)}" y="${f1(ly + 11)}" text-anchor="middle" font-size="9.5" fill="var(--dim)">${E.esc(S.sectors[oc] || '')}</text>`);
@@ -161,7 +176,7 @@
     if (st.layers.orbits) {
       for (const n of P.NAMES) {
         const pts = orbits[n];
-        if (Math.hypot(pts[0].x, pts[0].y) > RMAX * 1.05) continue;
+        if (Math.hypot(pts[0].x, pts[0].y) > W_MAX * 1.05) continue;
         out.push(`<polyline points="${pts.map(p => toS(p.x, p.y).map(f1).join(',')).join(' ')}" fill="none" stroke="${PLANET_COLORS[n]}" stroke-opacity="0.18" stroke-width="1"/>`);
       }
     }
@@ -210,7 +225,7 @@
       for (const p of planets()) {
         const c = PLANET_COLORS[p.name], id = `planet-${p.name}`, on = st.sel === id;
         const w = lonXY(p.lon, p.sl);
-        if (p.sl <= RMAX * 1.02) {
+        if (p.sl <= RC_OUT) {
           const [x, y] = toS(w.x, w.y), r = p.name === 'Jupiter' ? 7 : 5;
           out.push(`<g data-id="${id}"><circle cx="${f1(x)}" cy="${f1(y)}" r="${r + 5}" fill="transparent"/><circle cx="${f1(x)}" cy="${f1(y)}" r="${r}" fill="${c}" stroke="${on ? 'var(--accent)' : 'var(--bg)'}" stroke-width="${on ? 2 : 1.4}"/>`);
           if (st.layers.labels) {
@@ -219,7 +234,7 @@
           }
           out.push('</g>');
         } else {                        // beyond the chart: arrow on the rim
-          const a = (p.lon + 75) * Math.PI / 180, rr = RMAX * s + 4;
+          const a = (p.lon + 75) * Math.PI / 180, rr = W_MAX * s + 4;
           const x = sunX + rr * Math.cos(a), y = sunY - rr * Math.sin(a);
           out.push(`<g data-id="${id}"><path d="M 0 -5 L 9 0 L 0 5 Z" transform="translate(${f1(x)} ${f1(y)}) rotate(${f1(-(p.lon + 75))})" fill="${c}"/>`);
           if (st.layers.labels) {
@@ -260,10 +275,12 @@
           if (on) out.push(`<circle cx="${f1(x)}" cy="${f1(y)}" r="13" fill="none" stroke="var(--accent)" stroke-width="1.4"/>`);
           out.push(`<rect x="${f1(x - 5.5)}" y="${f1(y - 5.5)}" width="11" height="11" transform="rotate(45 ${f1(x)} ${f1(y)})" fill="${hulkFill(h)}" stroke="${hulkStroke(h)}" stroke-width="1.5" stroke-dasharray="${h.hull_color ? '' : '2.5 2'}"/>`);
           if (h.pos.exact) out.push(`<circle cx="${f1(x)}" cy="${f1(y)}" r="1.6" fill="var(--accent)"/>`);
+          if (h.pos.probable) out.push(`<circle cx="${f1(x)}" cy="${f1(y)}" r="10.5" fill="none" stroke="var(--accent-2)" stroke-width="1.4" stroke-dasharray="3 2"/>`);
           if (st.layers.labels) {
             const ly = c.y - 14 - (c.items.length - 1 - i) * 13;
             const lx = right ? c.x + 16 : c.x - 16;
-            const colour = h.hull_color ? `<tspan fill="${E.qStroke(h.hull_color)}"> ${E.esc(h.hull_color)}</tspan>` : (h.code ? `<tspan fill="var(--dim)"> cipher ${E.esc(h.quality)}</tspan>` : '<tspan fill="var(--dim)"> pending</tspan>');
+            const colour = (h.hull_color ? `<tspan fill="${E.qStroke(h.hull_color)}"> ${E.esc(h.hull_color)}</tspan>` : (h.code ? `<tspan fill="var(--dim)"> cipher ${E.esc(h.quality)}</tspan>` : '<tspan fill="var(--dim)"> pending</tspan>'))
+              + (h.pos.probable ? `<tspan fill="var(--accent-2)"> · located ${h.pos.oc}/${h.pos.rc}</tspan>` : '');
             out.push(`<text x="${f1(lx)}" y="${f1(ly)}" text-anchor="${right ? 'start' : 'end'}" font-size="11.5" fill="${on ? 'var(--accent)' : 'var(--text)'}">${E.esc(h.code || h.cipher.slice(4, 8))}${colour}</text>`);
           }
           out.push('</g>');
@@ -381,7 +398,7 @@
   function updateCursor([sx, sy]) {
     const [wx, wy] = toW(sx, sy);
     const p = E.toPolar(wx, wy);
-    cursorText = p.rc <= RMAX + 10 ? `Oc ${p.oc} ${S.sectors[p.oc] || ''} / Rc ${p.rc.toFixed(0)}` : '-';
+    cursorText = p.rc <= W_MAX + 5 ? `Oc ${p.oc} ${S.sectors[p.oc] || ''} / Rc ${frInv(p.rc).toFixed(0)}` : '-';
     readout.innerHTML = readoutHtml();
   }
   function hover(e) {
@@ -401,7 +418,7 @@
       return `<b>Oc ${item.oc} / Rc ${item.rc}</b> <span class="dim">${E.esc(S.sectors[item.oc] || '')}</span>` + refs.map(r =>
         `<div><span style="color:${pColor(r.item.player)}">■</span> ${E.esc(r.item.player || '?')} · ${E.esc(r.kind === 'hulk' ? (r.item.code || r.item.cipher) : 'open')} point ${r.step}/3${r.time ? ' · ' + E.fmtTime(r.time) : ''}</div>`).join('');
     }
-    if (kind === 'hulk') return `<b>${E.esc(item.code || item.cipher)}</b> · ${item.hull_color ? `${E.esc(item.hull_class)} <span style="color:${E.qStroke(item.hull_color)}">${E.esc(item.hull_color)}</span>` : `cipher ${E.esc(item.quality || '?')}, hull colour unknown`}<div><span style="color:${pColor(item.player)}">■</span> ${E.esc(item.player || '?')} · ${E.fmtPos(item.pos)}${item.pos.exact ? '' : ' (centre of triangle)'}</div>`;
+    if (kind === 'hulk') return `<b>${E.esc(item.code || item.cipher)}</b> · ${item.hull_color ? `${E.esc(item.hull_class)} <span style="color:${E.qStroke(item.hull_color)}">${E.esc(item.hull_color)}</span>` : `cipher ${E.esc(item.quality || '?')}, hull colour unknown`}<div><span style="color:${pColor(item.player)}">■</span> ${E.esc(item.player || '?')} · ${E.fmtPos(item.pos)}${item.pos.exact ? '' : item.pos.probable ? ` (probable, ${E.esc(item.pos.confidence || '')} confidence)` : ' (centre of triangle)'}</div>`;
     if (kind === 'sweep') return `<b>${item.result === 'empty' ? 'No derelict' : 'Sweep, no reply posted'}</b> · <span style="color:${pColor(item.player)}">■</span> ${E.esc(item.player || '?')} (${E.esc(item.vessel || '?')})<div>${E.fmtTime(item.time)} · from ${E.fmtPos(item)} · covers Oc ${item.oc}, Rc ${Math.max(1, item.rc - RANGE)} to ${item.rc + RANGE}</div>`;
     if (kind === 'planet') { const p = planetNow(item.name); return `<b>${E.esc(item.name)}</b> Oc ${p.oc} / Rc ${p.rc}<div class="dim">longitude ${p.lon.toFixed(1)}° · ${p.sl.toFixed(2)} SL · ${live() ? 'now' : E.fmtTime(asOfTime())}</div>`; }
     return `<span style="color:${pColor(item.player)}">■</span> ${E.esc(item.player || '?')} · triangulation ${item.vertices.length}/3`;
@@ -424,7 +441,10 @@
         ['Cipher', E.esc(item.cipher || '-')],
         ['Signaller', `<span style="color:${pColor(item.player)}">■</span> ${E.esc(item.player || '?')} · ${E.esc(item.vessel || '?')}`],
         ['Points', item.vertices.length ? pointList(item.vertices, item.vertex_times) : '-'],
-        [item.pos.exact ? 'Position' : 'Estimate', `${E.fmtPos(item.pos)}${item.pos.exact ? ' (DM report)' : ' · centre of triangle'}`],
+        [item.pos.exact ? 'Position' : item.pos.probable ? 'Probable position' : 'Estimate',
+          `${E.fmtPos(item.pos)}${item.pos.exact ? ' (DM report)' : item.pos.probable ? ` · ${E.esc(item.pos.confidence || '')} confidence` : ' · centre of triangle'}`],
+        item.pos.probable && item.centre ? ['Triangle centre', E.fmtPos(item.centre)] : null,
+        item.probable && item.probable.evidence ? ['Evidence', `<span class="dim">${E.esc(item.probable.evidence)}</span>`] : null,
         item.exact_known && !item.pos.exact ? ['Exact fix', 'on file, classified (private DM)'] : null,
         ['Decoded', item.decoded ? `${E.fmtTime(item.decoded, true)}${item.decoded_by ? ' by ' + E.esc(item.decoded_by) : ''}` : 'not yet'],
         ['Encrypted data', item.encrypted_data != null ? `+${item.encrypted_data}` : '-'],
@@ -458,10 +478,10 @@
     }
   }
   function focusPoint({kind, item}) {
-    if (kind === 'hulk') return E.toXY(item.pos.oc, item.pos.rc);
-    if (kind === 'planet') { const p = planetNow(item.name); return lonXY(p.lon, Math.min(p.sl, RMAX)); }
-    if (kind === 'open') return E.toXY(...item.vertices.at(-1));
-    return E.toXY(item.oc, item.rc);
+    if (kind === 'hulk') return polarW(item.pos.oc, item.pos.rc);
+    if (kind === 'planet') { const p = planetNow(item.name); return lonXY(p.lon, Math.min(p.sl, RC_OUT)); }
+    if (kind === 'open') return polarW(...item.vertices.at(-1));
+    return polarW(item.oc, item.rc);
   }
   function select(id, fly) {
     st.sel = id && byId.has(id) ? id : null;
@@ -535,7 +555,7 @@
       S.hulks.filter(hulkVisible).slice().sort((a, b) => (b.time || '').localeCompare(a.time || '')).map(h => `<tr data-row="${h.id}" class="${h.id === st.sel ? 'on' : ''}">` +
         `<td>${E.esc(h.code || '-')}</td><td>${h.hull_class ? `${qcell(h.hull_color)} <span class="dim">${E.esc(h.hull_class)}</span>` : '<span class="dim">unknown</span>'}</td><td>${qcell(h.quality)}</td>` +
         `<td><span style="color:${pColor(h.player)}">■</span> ${E.esc(h.player || '?')}</td><td class="dim">${E.esc(h.vessel || '?')}</td>` +
-        `<td>${h.vertices.map(([o, r]) => `${o}/${r}`).join(' · ') || '-'}</td><td>${h.pos ? E.fmtPos(h.pos) + (h.pos.exact ? '' : h.exact_known ? ' <span class="dim">◇ fix classified</span>' : ' <span class="dim">◇</span>') : '-'}</td>` +
+        `<td>${h.vertices.map(([o, r]) => `${o}/${r}`).join(' · ') || '-'}</td><td>${h.pos ? E.fmtPos(h.pos) + (h.pos.exact ? '' : h.pos.probable ? ` <span class="cyan">located, ${E.esc(h.pos.confidence || '')} confidence</span>` : h.exact_known ? ' <span class="dim">◇ fix classified</span>' : ' <span class="dim">◇</span>') : '-'}</td>` +
         `<td>${h.decoded ? E.fmtTime(h.decoded) : '<span class="amber">pending</span>'}</td><td class="dim">${E.esc(h.cipher || '-')}</td></tr>`).join('') + '</tbody>';
     const sw = document.getElementById('sweeps');
     sw.innerHTML = '<thead><tr><th>Time</th><th>Vessel</th><th>Signaller</th><th>From</th><th>Covers</th><th>Result</th></tr></thead><tbody>' +
@@ -564,4 +584,5 @@
   setInterval(() => { if (live()) { planetCache.key = null; renderTargets(); draw(); } }, 600000);
   const start = decodeURIComponent(location.hash.slice(1));
   if (start && byId.has(start)) select(start, true);
+  window.addEventListener('hashchange', () => { const id = decodeURIComponent(location.hash.slice(1)); if (id && byId.has(id) && id !== st.sel) select(id, true); });
 })();

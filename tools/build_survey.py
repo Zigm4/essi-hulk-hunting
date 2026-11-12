@@ -318,6 +318,9 @@ class Survey:
             extra = mh.get(h['code'] or '') or mh.get(h['cipher']) or {}
             h['exact'] = extra.get('exact') if extra.get('public') else None
             h['exact_known'] = bool(extra.get('exact'))
+            pr = extra.get('probable')
+            h['probable'] = ({'oc': pr[0], 'rc': pr[1], 'confidence': extra.get('confidence'),
+                              'evidence': extra.get('evidence')} if pr else None)
             h['hull_class'] = extra.get('class')
             h['hull_color'] = extra.get('color')
             h['status'] = extra.get('status')

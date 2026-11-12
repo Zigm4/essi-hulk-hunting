@@ -9,7 +9,10 @@
     s.hulks.forEach((h, i) => {
       h.id = h.code || h.cipher || `hulk-${i}`;
       h.time = h.decoded || h.completed;
-      h.pos = h.exact ? {oc: h.exact[0], rc: h.exact[1], exact: true} : centroid(h.vertices);
+      h.centre = centroid(h.vertices);
+      h.pos = h.exact ? {oc: h.exact[0], rc: h.exact[1], exact: true}
+        : h.probable ? {oc: h.probable.oc, rc: h.probable.rc, probable: true, confidence: h.probable.confidence}
+        : h.centre;
     });
     s.scans.forEach((x, i) => { x.id = `sweep-${i + 1}`; });
     return s;
