@@ -50,11 +50,7 @@
       `<td>${Object.entries(r.q).map(([q, n]) => `${qcell(q)} ×${n}`).join('  ')}</td>` +
       `<td>${r.rc.length ? `${Math.min(...r.rc)}–${Math.max(...r.rc)}` : '-'}</td><td>${E.esc(r.colors.join(', ') || '-')}</td></tr>`).join('') + '</tbody>';
 
-  // --- drift log -----------------------------------------------------------------------------------------
-  const drifts = S.calibration.filter(c => c.result === 'drift').slice().reverse();
-  document.getElementById('drifts').innerHTML = '<thead><tr><th>Time</th><th>Signaller</th><th>Vessel</th><th>Position</th><th>Roll</th><th>Threshold</th></tr></thead><tbody>' +
-    drifts.map(c => `<tr><td>${E.fmtTime(c.time)}</td><td>${E.esc(c.player || '?')}</td><td class="dim">${E.esc(c.vessel)}</td><td>${E.fmtPos(c)}</td>` +
-      `<td class="amber">${c.roll}</td><td>${c.threshold.toFixed(3)}</td></tr>`).join('') + '</tbody>';
+  const drifts = S.calibration.filter(c => c.result === 'drift');
 
   // --- kpis ----------------------------------------------------------------------------------------------
   const locks = S.calibration.filter(c => c.result === 'lock').length, drifted = drifts.length;
