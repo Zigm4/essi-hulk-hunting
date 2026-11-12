@@ -2,6 +2,8 @@
 
 **EastShire Space Industries · Deep Survey Division**: derelict survey of the UnderPunks RPG solar system.
 
+**Live:** https://zigm4.github.io/essi-hulk-hunting/
+
 ESSI field analysts read the public comms traffic of the `#spacecraft` channel and chart what it reveals about
 derelict hulls (HULKS): where triangulations resolved them, which sector slices scanners swept empty, which
 stations sit where, and how the instruments behave (calibration rolls, cipher quality, jump laws).
