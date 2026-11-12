@@ -56,32 +56,6 @@
     drifts.map(c => `<tr><td>${E.fmtTime(c.time)}</td><td>${E.esc(c.player || '?')}</td><td class="dim">${E.esc(c.vessel)}</td><td>${E.fmtPos(c)}</td>` +
       `<td class="amber">${c.roll}</td><td>${c.threshold.toFixed(3)}</td></tr>`).join('') + '</tbody>';
 
-  // --- fast jumps ----------------------------------------------------------------------------------------
-  const J = S.fast_jumps;
-  document.getElementById('jumps-summary').innerHTML = J.samples
-    ? `<span class="cyan">${J.match_law}</span> of ${J.samples} measured FAST jumps follow ⌈Rc^0.4⌉ exactly (${pct(J.match_law / J.samples)}). Exceptions:`
-    : 'No FAST jump measured yet.';
-  document.getElementById('jumps').innerHTML = '<thead><tr><th>Time</th><th>Vessel</th><th>From → to</th><th>Jump</th><th>Law</th></tr></thead><tbody>' +
-    J.mismatches.slice().reverse().map(j => `<tr><td>${E.fmtTime(j.time)}</td><td>${E.esc(j.vessel)}</td><td>Rc ${j.from} → ${j.to}</td><td class="amber">${j.delta}</td><td>${j.law}</td></tr>`).join('') + '</tbody>';
-
-  // --- planet model check ---------------------------------------------------------------------------
-  const P = window.ESSI_PLANETS;
-  const BODIES = [[/mercury/i, 'Mercury'], [/venus/i, 'Venus'], [/earth|luna|ratropia/i, 'Earth'], [/mars|phobos|deimos/i, 'Mars'],
-    [/jupiter|^io$|europa|ganymede|callisto/i, 'Jupiter'], [/saturn|titan|enceladus/i, 'Saturn']];
-  const checks = (S.station_log || []).map(o => {
-    const b = BODIES.find(([re]) => re.test(o.name));
-    if (!b) return null;
-    const p = P.position(b[1], new Date(o.time));
-    return {...o, planet: b[1], p, ok: p.oc === o.oc && p.rc === o.rc};
-  }).filter(Boolean);
-  const good = checks.filter(c => c.ok).length;
-  document.getElementById('pm-summary').innerHTML = checks.length
-    ? `<span class="cyan">${good}</span> of ${checks.length} positions read for stations and moons match the computed planet exactly (sector and Rc). Mismatches:`
-    : 'No station position read yet.';
-  document.getElementById('pm').innerHTML = '<thead><tr><th>Time</th><th>Body</th><th>Read from</th><th>Game</th><th>Computed</th><th>Longitude</th></tr></thead><tbody>' +
-    checks.filter(c => !c.ok).reverse().map(c => `<tr><td>${E.fmtTime(c.time, true)}</td><td>${E.esc(c.name)} <span class="dim">(${c.planet})</span></td><td class="dim">${E.esc(c.source)}</td>` +
-      `<td class="amber">${c.oc}/${c.rc}</td><td>${c.p.oc}/${c.p.rc}</td><td>${c.p.lon.toFixed(1)}°</td></tr>`).join('') + '</tbody>';
-
   // --- kpis ----------------------------------------------------------------------------------------------
   const locks = S.calibration.filter(c => c.result === 'lock').length, drifted = drifts.length;
   document.getElementById('kpis').innerHTML = [

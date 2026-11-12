@@ -87,40 +87,6 @@
    ]
   },
   {
-   "id": "FN-008",
-   "date": "2026-11-11",
-   "tag": "Navigation",
-   "confidence": "confirmed",
-   "title": "Moving around the Sun",
-   "body": [
-    "`.53` / `.54`: Rc + / −. SLOW moves 1 SL per command; FAST jumps ⌈Rc^0.4⌉ SL measured from the departure Rc (4 at Rc 30, 5 at 50, 8 at 160, 9 at 210). `.31` toggles FAST.",
-    "`.51`: next sector (Oc + 1, anticlockwise); `.52`: previous sector (Oc − 1, clockwise). 12 sectors, Rc unchanged. A sector change costs more fuel the further out you are (26 SL of travel at Rc 50, 86 at Rc 163): change sectors at the lowest Rc of a trip.",
-    "#spacecraft runs a 10-minute slowmode, so every command, `.31` included, costs about 10 minutes."
-   ]
-  },
-  {
-   "id": "FN-009",
-   "date": "2026-11-12",
-   "tag": "Navigation",
-   "confidence": "likely",
-   "title": "SOSS-03 jumps twice as far as the law",
-   "body": [
-    "On 10-11/11 the FAST jumps of SOSS-03 measured exactly twice ⌈Rc^0.4⌉ (109 → 123, 137 → 152, 164 → 148). Every other vessel follows the law. A boost or a vessel feature is the likely cause."
-   ]
-  },
-  {
-   "id": "FN-010",
-   "date": "2026-11-12",
-   "tag": "Planets",
-   "confidence": "confirmed",
-   "title": "Planet positions follow the real solar system",
-   "body": [
-    "The game places the planets where they really are around the Sun: Oc = heliocentric ecliptic longitude / 30° + 1 (Oc 1 covers 0-30°), Rc = distance in the ecliptic plane in miles / 3,000,000, rounded down (1 AU is about 31 SL). Game coordinates are also written `Oc.RRRRRRRR`, Oc plus Rc / 100,000,000: `2.0000003` is Oc 2 / Rc 30.",
-    "The chart computes the planets on your own device from JPL orbital elements, for the date picked on the timeline. Compared with the DE421 ephemeris over two years, the sector always matches; Rc can be one off near a boundary for the giant planets.",
-    "The Planet model check panel compares every station, moon and planet position read in #spacecraft (launch checks, dockings, orbit insertions) with the computed one. On 12/11: 121 of 125 identical. Three of the four mismatches sit right at a sector boundary: Mars Station still in Oc 3 about 1.7 days after Mars crossed into Oc 4 (12/10), Mercury Station already in Oc 4 about a day before Mercury got there (11/11). Near a boundary, trust the game's own readout over the chart."
-   ]
-  },
-  {
    "id": "FN-011",
    "date": "2026-11-12",
    "tag": "Derelicts",
