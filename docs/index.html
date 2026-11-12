@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ESSI Hulk Hunting</title>
+<meta name="description" content="EastShire Space Industries derelict survey: hulks resolved by triangulation, scanner sweeps and stations of the UnderPunks solar system.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23090d12'/%3E%3Cpath d='M8 2 L14 8 L8 14 L2 8 Z' fill='none' stroke='%23f2a93b' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=VT323&display=swap">
+<link rel="stylesheet" href="assets/essi.css">
+<style>
+.console { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: start; }
+@media (max-width: 1040px) { .console { grid-template-columns: minmax(0, 1fr); } }
+.side { display: grid; gap: 14px; min-width: 0; }
+.chart { position: relative; height: min(78vh, 820px); min-height: 380px; touch-action: none; overflow: hidden; background:
+  radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--amber) 5%, transparent), transparent 60%); }
+.chart svg { width: 100%; height: 100%; display: block; cursor: grab; user-select: none; }
+.chart svg.dragging { cursor: grabbing; }
+.chart svg:focus-visible { outline: 1px solid var(--amber); outline-offset: -1px; }
+.ctrl { position: absolute; top: 10px; right: calc(10px + env(safe-area-inset-right, 0px) * 0); display: grid; gap: 4px; }
+.readout { position: absolute; left: 10px; bottom: 8px; font-size: 11.5px; color: var(--dim); pointer-events: none; background: color-mix(in srgb, var(--bg) 75%, transparent); padding: 2px 6px; }
+.readout b { color: var(--cyan); font-weight: 500; }
+.tip { position: absolute; pointer-events: none; background: var(--pane-2); border: 1px solid var(--amber-dim); padding: 4px 8px; font-size: 11.5px; white-space: nowrap; z-index: 5; }
+.group-label { font-size: 10.5px; letter-spacing: 0.12em; color: var(--dim); text-transform: uppercase; }
+.timeline { display: grid; gap: 4px; }
+.timeline input { width: 100%; accent-color: var(--amber); }
+.timeline .val { font-size: 12px; color: var(--cyan); }
+.targets { display: grid; gap: 2px; max-height: 300px; overflow-y: auto; }
+.target { font: inherit; font-size: 12.5px; text-align: left; background: transparent; color: var(--text); border: 1px solid transparent; padding: 4px 6px; cursor: pointer; display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.target:hover { border-color: var(--line); background: var(--pane-2); }
+.target.on { border-color: var(--amber-dim); background: var(--pane-2); }
+.target .k { color: var(--dim); font-size: 11.5px; }
+.target .mark { width: 9px; height: 9px; transform: rotate(45deg); border: 1px solid var(--text); display: inline-block; }
+.target .mark.sweep { transform: none; border-radius: 50%; border-color: var(--amber); }
+.detail dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 12px; margin: 0; font-size: 12.5px; }
+.detail dt { color: var(--dim); }
+.detail dd { margin: 0; overflow-wrap: anywhere; }
+.detail .note { font-size: 12px; color: var(--dim); }
+.empty-state { color: var(--dim); font-size: 12.5px; }
+.hint { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: var(--pane-2); border: 1px solid var(--amber-dim); color: var(--amber); padding: 6px 12px; font-size: 12px; pointer-events: none; }
+.lgrid { display: grid; gap: 4px; font-size: 12px; color: var(--text); }
+.lgrid .lg { display: inline-flex; align-items: center; gap: 8px; }
+.lgrid svg { flex: none; }
+.lgrid svg text { font-family: var(--font-mono); }
+#lplanets { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+.target .mark.planet { transform: none; border-radius: 50%; border-color: transparent; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="brand"><span class="logo">HULK HUNTING</span><span class="div">EastShire Space Industries · Deep Survey Division</span></div>
+    <nav aria-label="Pages"><a href="index.html" aria-current="page">Chart</a><a href="notes.html">Field notes</a></nav>
+    <div class="sync" id="sync">DATA SYNC …</div>
+  </div>
+
+  <div class="boot" id="boot" aria-live="polite">
+    <div>&gt; ESSI/DSD derelict survey terminal · open-source intelligence from comms channel #spacecraft</div>
+    <div>&gt; loading survey.json<span class="cursor"></span></div>
+  </div>
+
+  <div class="console">
+    <section class="pane" aria-label="Solar chart">
+      <header><h2>Solar chart</h2><span class="meta">12 sectors (Oc) × distance from the Sun (Rc, in SL) · drag to pan · click then scroll, or pinch, to zoom</span></header>
+      <div class="chart" id="chart">
+        <svg id="map" tabindex="0" role="application" aria-label="Interactive polar chart of derelicts, sweeps and stations. Arrow keys pan, plus and minus zoom, 0 resets.">
+          <defs>
+            <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="7" height="7" fill="var(--empty)" fill-opacity="0.07"></rect>
+              <line x1="0" y1="0" x2="0" y2="7" stroke="var(--empty)" stroke-width="1.6" stroke-opacity="0.35"></line>
+            </pattern>
+          </defs>
+          <g id="layer"></g>
+        </svg>
+        <div class="ctrl">
+          <button class="btn" id="zin" aria-label="Zoom in">+</button>
+          <button class="btn" id="zout" aria-label="Zoom out">−</button>
+          <button class="btn" id="zreset" aria-label="Reset view">⟲</button>
+        </div>
+        <div class="readout" id="readout">CURSOR <b>-</b> · ZOOM <b>×1.0</b></div>
+        <div class="tip" id="tip" hidden></div>
+        <div class="hint" id="hint" hidden>Click the chart, or hold Ctrl / ⌘, to zoom with the wheel</div>
+      </div>
+    </section>
+
+    <div class="side">
+      <section class="pane" aria-label="Legend">
+        <header><h2>Legend</h2><span class="meta">click a signaller to hide or show it</span></header>
+        <div class="body">
+          <div class="group-label">Signallers (triangulation colour)</div>
+          <div class="chips" id="fp"></div>
+          <div class="group-label">Derelicts</div>
+          <div class="lgrid" id="lhull"></div>
+          <div class="group-label">Planets (computed for the timeline date)</div>
+          <div class="lgrid" id="lplanets"></div>
+          <div class="group-label">Other marks</div>
+          <div class="lgrid">
+            <span class="lg"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="4" fill="#ff9f43" stroke="var(--bg)" stroke-width="1.2"/></svg>triangulation point (hover: exact Oc / Rc)</span>
+            <span class="lg"><svg width="20" height="12" viewBox="0 0 20 12" aria-hidden="true"><rect x="1" y="1" width="18" height="10" fill="url(#hatch)" stroke="var(--empty)"/></svg>sector slice swept empty</span>
+            <span class="lg"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.5"/><text x="7" y="10" text-anchor="middle" font-size="7.5" fill="var(--amber)">?</text></svg>sweep with no reply (likely a hit)</span>
+            <span class="lg"><svg width="20" height="12" viewBox="0 0 20 12" aria-hidden="true"><path d="M1 10 L10 2 L19 10" fill="none" stroke="var(--dim)" stroke-dasharray="3 3"/></svg>open triangulation</span>
+          </div>
+        </div>
+      </section>
+      <section class="pane" aria-label="Filters">
+        <header><h2>Filters</h2><button class="chip" id="fall" aria-pressed="false">Reset</button></header>
+        <div class="body">
+          <div class="group-label">Layers</div>
+          <div id="layers" style="display:grid; gap:4px;"></div>
+          <div class="group-label">Cipher quality</div>
+          <div class="chips" id="fq"></div>
+          <div class="group-label">Timeline</div>
+          <div class="timeline">
+            <input type="range" id="asof" min="0" max="0" value="0" aria-label="Show events up to this date">
+            <span class="val" id="asof-val">-</span>
+          </div>
+        </div>
+      </section>
+      <section class="pane" aria-label="Targets">
+        <header><h2>Targets</h2><span class="meta" id="tcount"></span></header>
+        <div class="body"><div class="targets" id="targets"></div></div>
+      </section>
+      <section class="pane detail" aria-label="Selection">
+        <header><h2>Readout</h2><span class="meta" id="dkind"></span></header>
+        <div class="body" id="detail"><p class="empty-state">Select a derelict, a triangulation point, a sweep or a planet on the chart.</p></div>
+      </section>
+    </div>
+  </div>
+
+  <section class="pane" aria-label="Derelict registry">
+    <header><h2>Derelict registry</h2><span class="meta">exact coordinates go by DM to whoever decodes the cipher · ◇ = centre of the triangle (estimate)</span></header>
+    <div class="tablebox"><table id="registry"></table></div>
+  </section>
+
+  <section class="pane" aria-label="Sweep log">
+    <header><h2>Sweep log</h2><span class="meta" id="sweepmeta"></span></header>
+    <div class="tablebox"><table id="sweeps"></table></div>
+  </section>
+
+  <footer class="foot">
+    <div>Compiled by ESSI field analysts from public traffic on #spacecraft (UnderPunks RPG). Vessel positions come from flight embeds; a derelict resolves inside its triangle and its exact position is sent privately. Planets are computed in your browser from JPL orbital elements.</div>
+    <div class="analysis" id="analysis"></div>
+  </footer>
+</div>
+<script src="assets/survey.js"></script>
+<script src="assets/planets.js"></script>
+<script src="assets/map.js"></script>
+</body>
+</html>

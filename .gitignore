@@ -1,0 +1,4 @@
+data/private.json
+*.tmp
+__pycache__/
+.DS_Store

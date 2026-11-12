@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ESSI Field Notes</title>
+<meta name="description" content="EastShire Space Industries field notes: calibration rolls, cipher quality, scanner sweeps and navigation laws observed on #spacecraft.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23090d12'/%3E%3Cpath d='M8 2 L14 8 L8 14 L2 8 Z' fill='none' stroke='%23f2a93b' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=VT323&display=swap">
+<link rel="stylesheet" href="assets/essi.css">
+<style>
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); gap: 14px; align-items: start; }
+.bar { position: relative; height: 10px; background: var(--grid); min-width: 120px; }
+.bar .exp { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--amber); }
+.bar .obs { position: absolute; left: 0; top: 0; bottom: 0; background: var(--cyan); opacity: 0.8; }
+.legend-inline { font-size: 11.5px; color: var(--dim); display: flex; gap: 16px; flex-wrap: wrap; }
+.legend-inline i { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; }
+.notes { display: grid; gap: 12px; }
+.note { border: 1px solid var(--line); background: var(--pane); padding: 12px 14px; display: grid; gap: 8px; }
+.note .head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+.note .id { color: var(--amber); font-size: 12px; letter-spacing: 0.08em; }
+.note .date { color: var(--dim); font-size: 11.5px; }
+.note h3 { font-size: 14.5px; flex-basis: 100%; }
+.note p { font-size: 13px; }
+.note code, .pane code { color: var(--cyan); background: var(--pane-2); padding: 0 4px; }
+.notefilter { display: flex; flex-wrap: wrap; gap: 6px; }
+.kpis { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.kpi { display: grid; }
+.kpi b { font-family: var(--font-display); font-size: 30px; line-height: 1; color: var(--amber); font-weight: 400; }
+.kpi span { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="brand"><span class="logo">HULK HUNTING</span><span class="div">EastShire Space Industries · Deep Survey Division</span></div>
+    <nav aria-label="Pages"><a href="index.html">Chart</a><a href="notes.html" aria-current="page">Field notes</a></nav>
+    <div class="sync" id="sync">DATA SYNC …</div>
+  </div>
+
+  <div class="boot">
+    <div>&gt; ESSI/DSD field notes · what the comms traffic on #spacecraft tells us about derelict recovery</div>
+    <div>&gt; figures below are recomputed from the archive at every survey update<span class="cursor"></span></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid2">
+    <section class="pane" aria-label="Calibration rolls">
+      <header><h2>Calibration · KNW rolls</h2><span class="meta">threshold = 60 + personal KNW of the signaller</span></header>
+      <div class="body">
+        <div class="legend-inline"><span><i style="background:var(--cyan)"></i>observed lock rate</span><span><i style="background:var(--amber)"></i>expected (threshold %)</span></div>
+        <div class="tablebox"><table id="calib"></table></div>
+        <p class="dim" style="font-size:12px">Attempts = locks + drifts on the Triadic Signal Array. Rejections (wrong Oc, gap under 50 Rc) are counted apart: they are not rolls.</p>
+      </div>
+    </section>
+    <section class="pane" aria-label="Cipher quality">
+      <header><h2>Cipher quality vs signaller</h2><span class="meta">sorted by personal KNW</span></header>
+      <div class="body"><div class="tablebox"><table id="quality"></table></div></div>
+    </section>
+  </div>
+
+  <div class="grid2">
+    <section class="pane" aria-label="Drift log">
+      <header><h2>Drift log</h2><span class="meta">every failed calibration with its roll</span></header>
+      <div class="body"><div class="tablebox" style="max-height:340px; overflow-y:auto"><table id="drifts"></table></div></div>
+    </section>
+    <section class="pane" aria-label="Navigation">
+      <header><h2>Fast jump law</h2><span class="meta">⌈Rc^0.4⌉ SL from the departure Rc</span></header>
+      <div class="body">
+        <p id="jumps-summary"></p>
+        <div class="tablebox" style="max-height:280px; overflow-y:auto"><table id="jumps"></table></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="pane" aria-label="Field log">
+    <header><h2>Field log</h2><span class="meta" id="ncount"></span></header>
+    <div class="body">
+      <div class="notefilter" id="nf"></div>
+      <div class="notes" id="notes"></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div>Compiled by ESSI field analysts from public traffic on #spacecraft (UnderPunks RPG) and mechanics announced by the developer. Confidence: <span class="tag confirmed">confirmed</span> measured or announced · <span class="tag likely">likely</span> fits every observation · <span class="tag hypothesis">hypothesis</span> to be tested.</div>
+    <div class="analysis" id="analysis"></div>
+  </footer>
+</div>
+<script src="assets/survey.js"></script>
+<script src="assets/notes.js"></script>
+</body>
+</html>

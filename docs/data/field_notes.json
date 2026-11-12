@@ -1,0 +1,147 @@
+{
+ "_doc": "ESSI field notes rendered by notes.html. Edit by hand. confidence: confirmed | likely | hypothesis. body: list of paragraphs (plain text, `code` allowed).",
+ "notes": [
+  {
+   "id": "FN-001",
+   "date": "2026-11-11",
+   "tag": "Calibration",
+   "confidence": "confirmed",
+   "title": "Calibration threshold = 60 + the signaller's personal Knowledge",
+   "body": [
+    "Pulling lever `25` on the Triadic Signal Array rolls 1-100 against a threshold printed in the failure message: `[KNW roll 79 vs 65.079]`. The lock succeeds when the roll is under the threshold.",
+    "The threshold is 60 plus the personal KNW of whoever pulls the lever. The follower's knowledge is not counted, even though it is added to the team KNW shown in pre-flight checks.",
+    "Checked on three followers: Ace (knowledge 1): 65.079 = 60 + 5.079. Horst's follower (4): 65.040 = 60 + 9.040 − 4. lasergeek's follower (8): 81.793 = 60 + 29.793 − 8.",
+    "Neither the vessel nor the position changes it: Roxy rolls against 60.024 at Rc 47, 62 and 104. Each point of personal KNW adds about 1 % success."
+   ]
+  },
+  {
+   "id": "FN-002",
+   "date": "2026-11-12",
+   "tag": "Calibration",
+   "confidence": "confirmed",
+   "title": "A retry is a fresh roll, not a better one",
+   "body": [
+    "After a drift (`Calibration drifted ... Try the same point again`), the next pull at the same point uses the same threshold and a new 1-100 roll. A roll of 100 has been seen.",
+    "Failed rolls at the same point went down 5 times out of 6 (Zigm4 98 → 79 → 68, then a lock), but Horst went from 77 to 93 without moving. There is no guaranteed decrease: after a high roll the next one is usually lower by plain chance.",
+    "Every pull costs 6 helium, success or not."
+   ]
+  },
+  {
+   "id": "FN-003",
+   "date": "2026-11-12",
+   "tag": "Quality",
+   "confidence": "likely",
+   "title": "Cipher quality follows the signaller's Knowledge, not the distance",
+   "body": [
+    "Observed: Roxy (KNW 0.02) GREEN; Zigm4 (5.08) BLUE twice; bartleby (10.1) WHITE twice; lasergeek (≈21.8) BLACK three times.",
+    "Zigm4's two triangles sat in the same Rc 162-215 band as lasergeek's BLACK triangles and still came out BLUE. bartleby's WHITE triangles sat at Rc 48-100. Distance from the Sun does not explain the quality; the signaller does.",
+    "The order GREEN < BLUE < WHITE < BLACK matches the loot-box colours announced for hulks: Purple, Pink, Green, Blue, Red, White, Black. RED probably sits between ~5 and ~10 KNW."
+   ]
+  },
+  {
+   "id": "FN-004",
+   "date": "2026-11-11",
+   "tag": "Triangulation",
+   "confidence": "confirmed",
+   "title": "Triadic Signal Array: rules of a triangulation",
+   "body": [
+    "Three locks make a triangle. Every vertex must be in a new sector (Oc) and at least 50 Rc away from the previous vertex only (`Calibration rejected: you are only 28 Rc from the last vertex (need at least 50 Rc)`, `Oc 4 is already one of this triangulation's vertices`).",
+    "The triangulation belongs to the player who pulls the lever, not to the ship, and survives for hours or days between vertices.",
+    "Lever `25` is sometimes only primed (`COMMS PRIMED - You will need to pull this lever again`): pull it a second time.",
+    "The third lock prints `SIGNAL DECODED, TRIANGULATION COMPLETE`, a sealed cipher with its quality and +3 to +9 Encrypted Data (unrelated to quality). `!unpack cipher TRD-XXXX-XXXX` from inside any vessel resolves a derelict inside the triangle, sends its coordinates by DM and gives the `!enter code` to use on site."
+   ]
+  },
+  {
+   "id": "FN-005",
+   "date": "2026-11-12",
+   "tag": "Derelicts",
+   "confidence": "likely",
+   "title": "Derelict codes read faction + hull class, numbered per family",
+   "body": [
+    "Codes come in decode order inside each family: mrtg-01 (09/11), mrtg-02 (09/11), mrtg-03 (12/11); qnxs-01 (08/11) then qnxs-03 (12/11). A qnxs-02 was therefore decoded somewhere outside this archive.",
+    "The DM decode reports name the class: mrtg-03 is an `MRT Goliath`, qnxs-03 a `QNX Seeker`. So the first three letters are the faction (MRT, QNX, LYC for Lycanox) and the fourth the class: g = Goliath, s = Seeker. mrts-01 should be an MRT Seeker, lycl-01 a Lycanox L-class.",
+    "Reports also carry a status (`DEFENDED`, `RADIATING`) and coordinates written `Oc.000000Rc` (for example `5.00000062` would be Oc 5 / Rc 62). Boarding: fly there, `!exit` the vessel, then `!enter <code>`."
+   ]
+  },
+  {
+   "id": "FN-006",
+   "date": "2026-11-12",
+   "tag": "Scanner",
+   "confidence": "confirmed",
+   "title": "Salvage Scanner (SSCAN) sweeps 32 SL inside one sector",
+   "body": [
+    "Fit a Salvage Scanner on a SHORT comms hardpoint, pull `25`, pick its hardpoint emoji. A sweep costs 16 radon gas and covers 32 SL inside the current sector, 2 results at most. LONG (LSCAN) reaches 64 SL and 4 results, GREAT (GSCAN) 128 SL and 8.",
+    "Empty sweep: `No derelict hulks detected within scanner range.` A hit shows a radar image for a short window to pick the hulk, then the full report arrives by DM.",
+    "Hulks can drift, be claimed or destroyed, and scanners themselves have a chance to spawn new ones: an empty slice is only empty at sweep time."
+   ]
+  },
+  {
+   "id": "FN-007",
+   "date": "2026-11-12",
+   "tag": "Scanner",
+   "confidence": "likely",
+   "title": "Sector 5 is the only one that answered at Rc 62",
+   "body": [
+    "Roxy (SOLT-10) swept every sector at Rc 62 on 9-10/11. All came back empty except Oc 5, where no reply was posted. Two earlier sweeps in Oc 5 at Rc 77 and 82 were also silent.",
+    "Those three silent sweeps sit inside the Mars-band triangles of bartleby and Roxy (qnxs-01, mrtg-01, mrts-01, centres near Oc 5 / Rc 62). The silence is most likely the radar of a hit."
+   ]
+  },
+  {
+   "id": "FN-008",
+   "date": "2026-11-11",
+   "tag": "Navigation",
+   "confidence": "confirmed",
+   "title": "Moving around the Sun",
+   "body": [
+    "`.53` / `.54`: Rc + / −. SLOW moves 1 SL per command; FAST jumps ⌈Rc^0.4⌉ SL measured from the departure Rc (4 at Rc 30, 5 at 50, 8 at 160, 9 at 210). `.31` toggles FAST.",
+    "`.51`: next sector (Oc + 1, anticlockwise); `.52`: previous sector (Oc − 1, clockwise). 12 sectors, Rc unchanged. A sector change costs more fuel the further out you are (26 SL of travel at Rc 50, 86 at Rc 163): change sectors at the lowest Rc of a trip.",
+    "#spacecraft runs a 10-minute slowmode, so every command, `.31` included, costs about 10 minutes."
+   ]
+  },
+  {
+   "id": "FN-009",
+   "date": "2026-11-12",
+   "tag": "Navigation",
+   "confidence": "likely",
+   "title": "SOSS-03 jumps twice as far as the law",
+   "body": [
+    "On 10-11/11 the FAST jumps of SOSS-03 measured exactly twice ⌈Rc^0.4⌉ (109 → 123, 137 → 152, 164 → 148). Every other vessel follows the law. A boost or a vessel feature is the likely cause."
+   ]
+  },
+  {
+   "id": "FN-010",
+   "date": "2026-11-12",
+   "tag": "Planets",
+   "confidence": "confirmed",
+   "title": "Planet positions follow the real solar system",
+   "body": [
+    "The game places the planets where they really are around the Sun: Oc = heliocentric ecliptic longitude / 30° + 1 (Oc 1 covers 0-30°), Rc = distance in the ecliptic plane in miles / 3,000,000, rounded down (1 AU ≈ 31 SL).",
+    "Checked on 36 positions read in #spacecraft from 03/10 to 11/11 (Mercury, Earth, Luna, Ratropia, Mars, Jupiter, Europa): 35 identical. The exception is Mars Station on 12/10, still shown in Oc 3 about 1.7 days after Mars crossed into Oc 4: the game seems to refresh planet positions with a delay.",
+    "The chart computes the planets on your own device from JPL orbital elements, for the date picked on the timeline. Compared with the DE421 ephemeris over two years, the sector always matches; Rc can be one off near a boundary for the giant planets."
+   ]
+  },
+  {
+   "id": "FN-011",
+   "date": "2026-11-12",
+   "tag": "Derelicts",
+   "confidence": "confirmed",
+   "title": "Hull colour is shifted from the cipher quality",
+   "body": [
+    "Both SOLT-09 ciphers were announced BLUE in #spacecraft. The DM decode reports then gave the hulls a different colour: qnxs-03 is a `QNX Seeker · RED`, mrtg-03 an `MRT Goliath · PURPLE`. The colour of the hull is shifted from the colour of the cipher.",
+    "Keep the two apart. The cipher quality is what the signaller's Knowledge produced (FN-003); the hull colour belongs to the derelict and is only known from the DM. The chart fills a derelict with its hull colour when a report is on file, and only outlines it with the cipher quality otherwise.",
+    "How big is the shift? In the loot-box order announced for hulks (Purple, Pink, Green, Blue, Red, White, Black) BLUE to RED is one step up. In the usual game rarity order (Green, Blue, Purple, ...) BLUE to PURPLE is one step up. Each report fits one reading and not the other, so the rule is still open: fixed step, random step or tied to the hull class. Every new DM report will tell more."
+   ]
+  },
+  {
+   "id": "FN-012",
+   "date": "2026-11-12",
+   "tag": "Derelicts",
+   "confidence": "confirmed",
+   "title": "The derelict really is inside its triangle",
+   "body": [
+    "Both SOLT-09 DM reports place the derelict inside its triangle, one of them right against a sector boundary.",
+    "The centre of the triangle is only a first guess: the real positions were up to ~40 Rc away from it, and one sat in a neighbouring sector. Exact fixes stay classified on this site; the DM states that no one else has been told."
+   ]
+  }
+ ]
+}

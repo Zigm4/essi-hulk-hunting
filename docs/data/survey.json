@@ -1,0 +1,1122 @@
+{
+ "generated": "2026-11-12T08:39:55Z",
+ "coverage": {
+  "from": "2026-08-29T08:36:43Z",
+  "to": "2026-11-11T14:38:35Z",
+  "messages": 7188,
+  "gaps": []
+ },
+ "sectors": {
+  "1": "Arietato",
+  "2": "Pizzarius",
+  "3": "Cheesius",
+  "4": "Dootnootus",
+  "5": "Biscittarius",
+  "6": "Pantarius",
+  "7": "Copperus",
+  "8": "Bloodini",
+  "9": "Cakelio",
+  "10": "Rockittarius",
+  "11": "Shardini",
+  "12": "Shroomus"
+ },
+ "scanner": {
+  "range": 32,
+  "max_results": 2
+ },
+ "hulks": [
+  {
+   "code": "qnxs-01",
+   "cipher": "TRD-UNLX-35UH",
+   "quality": "WHITE",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "vertices": [
+    [
+     4,
+     49
+    ],
+    [
+     5,
+     100
+    ],
+    [
+     6,
+     49
+    ]
+   ],
+   "vertex_times": [
+    "2026-11-07T23:33:20Z",
+    "2026-11-08T03:18:55Z",
+    "2026-11-08T09:36:30Z"
+   ],
+   "completed": "2026-11-08T09:36:30Z",
+   "decoded": "2026-11-08T09:47:13Z",
+   "decoded_by": "bartleby",
+   "encrypted_data": 7,
+   "exact": null,
+   "exact_known": false,
+   "hull_class": null,
+   "hull_color": null,
+   "status": null,
+   "note": null,
+   "entries": []
+  },
+  {
+   "code": "mrtg-01",
+   "cipher": "TRD-Z43U-N7N3",
+   "quality": "GREEN",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "vertices": [
+    [
+     4,
+     49
+    ],
+    [
+     5,
+     102
+    ],
+    [
+     6,
+     47
+    ]
+   ],
+   "vertex_times": [
+    "2026-11-07T15:18:09Z",
+    "2026-11-08T21:02:24Z",
+    "2026-11-09T05:07:14Z"
+   ],
+   "completed": "2026-11-09T05:07:14Z",
+   "decoded": "2026-11-09T05:17:53Z",
+   "decoded_by": "Roxy",
+   "encrypted_data": 4,
+   "exact": null,
+   "exact_known": false,
+   "hull_class": null,
+   "hull_color": null,
+   "status": null,
+   "note": null,
+   "entries": []
+  },
+  {
+   "code": "mrtg-02",
+   "cipher": "TRD-S4Q8-6MLN",
+   "quality": "BLACK",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "vertices": [
+    [
+     3,
+     163
+    ],
+    [
+     4,
+     214
+    ],
+    [
+     5,
+     162
+    ]
+   ],
+   "vertex_times": [
+    "2026-11-08T09:33:53Z",
+    "2026-11-08T12:55:12Z",
+    "2026-11-08T17:18:56Z"
+   ],
+   "completed": "2026-11-08T17:18:56Z",
+   "decoded": "2026-11-09T07:37:33Z",
+   "decoded_by": "lasergeek",
+   "encrypted_data": 5,
+   "exact": null,
+   "exact_known": false,
+   "hull_class": null,
+   "hull_color": null,
+   "status": null,
+   "note": null,
+   "entries": []
+  },
+  {
+   "code": "lycl-01",
+   "cipher": "TRD-DD3X-A3JZ",
+   "quality": "BLACK",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "vertices": [
+    [
+     5,
+     164
+    ],
+    [
+     4,
+     215
+    ],
+    [
+     3,
+     163
+    ]
+   ],
+   "vertex_times": [
+    "2026-11-07T21:31:34Z",
+    "2026-11-08T03:28:02Z",
+    "2026-11-08T08:38:55Z"
+   ],
+   "completed": "2026-11-08T08:38:55Z",
+   "decoded": "2026-11-09T07:52:43Z",
+   "decoded_by": "lasergeek",
+   "encrypted_data": 3,
+   "exact": null,
+   "exact_known": false,
+   "hull_class": null,
+   "hull_color": null,
+   "status": null,
+   "note": null,
+   "entries": []
+  },
+  {
+   "code": null,
+   "cipher": "TRD-JRGM-FNV9",
+   "quality": "BLACK",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "vertices": [
+    [
+     5,
+     164
+    ],
+    [
+     4,
+     215
+    ],
+    [
+     3,
+     163
+    ]
+   ],
+   "vertex_times": [
+    "2026-11-09T09:52:49Z",
+    "2026-11-09T14:00:48Z",
+    "2026-11-09T18:21:23Z"
+   ],
+   "completed": "2026-11-09T18:21:23Z",
+   "decoded": null,
+   "decoded_by": null,
+   "encrypted_data": 7,
+   "exact": null,
+   "exact_known": false,
+   "hull_class": null,
+   "hull_color": null,
+   "status": null,
+   "note": null,
+   "entries": []
+  },
+  {
+   "code": "mrts-01",
+   "cipher": "TRD-VGTD-UY6Y",
+   "quality": "WHITE",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "vertices": [
+    [
+     6,
+     49
+    ],
+    [
+     5,
+     99
+    ],
+    [
+     4,
+     48
+    ]
+   ],
+   "vertex_times": [
+    "2026-11-08T10:09:06Z",
+    "2026-11-09T10:45:25Z",
+    "2026-11-10T14:31:14Z"
+   ],
+   "completed": "2026-11-10T14:31:14Z",
+   "decoded": "2026-11-10T14:42:48Z",
+   "decoded_by": "bartleby",
+   "encrypted_data": 5,
+   "exact": null,
+   "exact_known": false,
+   "hull_class": null,
+   "hull_color": null,
+   "status": null,
+   "note": null,
+   "entries": []
+  },
+  {
+   "code": "qnxs-03",
+   "cipher": "TRD-5XYD-UJPR",
+   "quality": "BLUE",
+   "player": "Zigm4",
+   "vessel": "SOLT-09",
+   "vertices": [
+    [
+     2,
+     164
+    ],
+    [
+     3,
+     215
+    ],
+    [
+     4,
+     163
+    ]
+   ],
+   "vertex_times": [
+    "2026-11-11T22:57:18Z",
+    "2026-11-12T00:39:21Z",
+    "2026-11-12T02:22:53Z"
+   ],
+   "completed": "2026-11-12T02:22:53Z",
+   "decoded": "2026-11-12T02:33:51Z",
+   "decoded_by": "Zigm4",
+   "encrypted_data": 4,
+   "source": "SOLT-09 log",
+   "exact": null,
+   "exact_known": true,
+   "hull_class": "QNX Seeker",
+   "hull_color": "RED",
+   "status": "RADIATING",
+   "note": null,
+   "entries": []
+  },
+  {
+   "code": "mrtg-03",
+   "cipher": "TRD-27ZD-QX8Y",
+   "quality": "BLUE",
+   "player": "Zigm4",
+   "vessel": "SOLT-09",
+   "vertices": [
+    [
+     4,
+     163
+    ],
+    [
+     5,
+     214
+    ],
+    [
+     6,
+     162
+    ]
+   ],
+   "vertex_times": [
+    "2026-11-12T02:56:56Z",
+    "2026-11-12T05:25:02Z",
+    "2026-11-12T07:08:09Z"
+   ],
+   "completed": "2026-11-12T07:08:09Z",
+   "decoded": "2026-11-12T07:19:38Z",
+   "decoded_by": "Zigm4",
+   "encrypted_data": 9,
+   "source": "SOLT-09 log",
+   "exact": null,
+   "exact_known": true,
+   "hull_class": "MRT Goliath",
+   "hull_color": "PURPLE",
+   "status": "DEFENDED",
+   "note": null,
+   "entries": []
+  }
+ ],
+ "open_triangulations": [
+  {
+   "vessel": "SOLT-10",
+   "player": "Horst",
+   "vertices": [
+    [
+     6,
+     63
+    ]
+   ],
+   "times": [
+    "2026-11-09T15:29:29Z"
+   ],
+   "updated": "2026-11-09T15:29:29Z"
+  },
+  {
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "vertices": [
+    [
+     6,
+     62
+    ]
+   ],
+   "times": [
+    "2026-11-09T18:09:55Z"
+   ],
+   "updated": "2026-11-09T18:09:55Z"
+  },
+  {
+   "vessel": "MMCS-01",
+   "player": "bartleby",
+   "vertices": [
+    [
+     4,
+     48
+    ]
+   ],
+   "times": [
+    "2026-11-10T15:36:55Z"
+   ],
+   "updated": "2026-11-10T15:36:55Z"
+  }
+ ],
+ "scans": [
+  {
+   "time": "2026-11-07T15:48:16Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 4,
+   "rc": 49,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-08T16:38:43Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 5,
+   "rc": 77,
+   "range": 32,
+   "result": "no_reply",
+   "text": ""
+  },
+  {
+   "time": "2026-11-08T22:57:37Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 5,
+   "rc": 82,
+   "range": 32,
+   "result": "no_reply",
+   "text": ""
+  },
+  {
+   "time": "2026-11-09T02:30:07Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 6,
+   "rc": 70,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-09T18:50:29Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 6,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-09T19:17:01Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 7,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-09T19:52:20Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 7,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-09T20:34:16Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 8,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-09T21:00:15Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 9,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-09T21:22:45Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 10,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-09T21:57:42Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 11,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-09T22:51:16Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 12,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-09T23:14:52Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 1,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-10T00:09:22Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 2,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-10T01:40:46Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 3,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-10T02:11:47Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 4,
+   "rc": 62,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-10T02:47:39Z",
+   "vessel": "SOLT-10",
+   "player": "Roxy",
+   "oc": 5,
+   "rc": 62,
+   "range": 32,
+   "result": "no_reply",
+   "text": ""
+  }
+ ],
+ "entries": [],
+ "calibration": [
+  {
+   "time": "2026-11-07T15:18:09Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 4,
+   "rc": 49,
+   "result": "lock",
+   "step": 1
+  },
+  {
+   "time": "2026-11-07T21:31:34Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 5,
+   "rc": 164,
+   "result": "lock",
+   "step": 1
+  },
+  {
+   "time": "2026-11-07T22:54:07Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 4,
+   "rc": 164,
+   "result": "rejected",
+   "text": "you are only 0 Rc from the last vertex (need at least 50 Rc ). Fly further out/in and pull again."
+  },
+  {
+   "time": "2026-11-07T23:33:20Z",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "oc": 4,
+   "rc": 49,
+   "result": "lock",
+   "step": 1
+  },
+  {
+   "time": "2026-11-08T01:16:38Z",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "oc": 5,
+   "rc": 77,
+   "result": "rejected",
+   "text": "you are only 28 Rc from the last vertex (need at least 50 Rc ). Fly further out/in and pull again."
+  },
+  {
+   "time": "2026-11-08T03:18:55Z",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "oc": 5,
+   "rc": 100,
+   "result": "lock",
+   "step": 2
+  },
+  {
+   "time": "2026-11-08T03:28:02Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 4,
+   "rc": 215,
+   "result": "lock",
+   "step": 2
+  },
+  {
+   "time": "2026-11-08T04:27:53Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 4,
+   "rc": 55,
+   "result": "rejected",
+   "text": "Oc 4 is already one of this triangulation's vertices. Fly to a NEW Oc and pull again."
+  },
+  {
+   "time": "2026-11-08T08:38:55Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 3,
+   "rc": 163,
+   "result": "lock",
+   "step": 3
+  },
+  {
+   "time": "2026-11-08T09:08:27Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 3,
+   "rc": 163,
+   "result": "drift",
+   "roll": 93,
+   "threshold": 81.79324999999966
+  },
+  {
+   "time": "2026-11-08T09:33:53Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 3,
+   "rc": 163,
+   "result": "lock",
+   "step": 1
+  },
+  {
+   "time": "2026-11-08T09:36:30Z",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "oc": 6,
+   "rc": 49,
+   "result": "lock",
+   "step": 3
+  },
+  {
+   "time": "2026-11-08T10:09:06Z",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "oc": 6,
+   "rc": 49,
+   "result": "lock",
+   "step": 1
+  },
+  {
+   "time": "2026-11-08T12:55:12Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 4,
+   "rc": 214,
+   "result": "lock",
+   "step": 2
+  },
+  {
+   "time": "2026-11-08T16:06:30Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 5,
+   "rc": 77,
+   "result": "rejected",
+   "text": "you are only 28 Rc from the last vertex (need at least 50 Rc ). Fly further out/in and pull again."
+  },
+  {
+   "time": "2026-11-08T17:18:56Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 5,
+   "rc": 162,
+   "result": "lock",
+   "step": 3
+  },
+  {
+   "time": "2026-11-08T17:25:01Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 5,
+   "rc": 77,
+   "result": "rejected",
+   "text": "you are only 28 Rc from the last vertex (need at least 50 Rc ). Fly further out/in and pull again."
+  },
+  {
+   "time": "2026-11-08T18:05:27Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 5,
+   "rc": 103,
+   "result": "drift",
+   "roll": 62,
+   "threshold": 60.024
+  },
+  {
+   "time": "2026-11-08T19:23:16Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 5,
+   "rc": 104,
+   "result": "drift",
+   "roll": 100,
+   "threshold": 60.024
+  },
+  {
+   "time": "2026-11-08T20:11:36Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 5,
+   "rc": 104,
+   "result": "drift",
+   "roll": 66,
+   "threshold": 60.024
+  },
+  {
+   "time": "2026-11-08T21:02:24Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 5,
+   "rc": 102,
+   "result": "lock",
+   "step": 2
+  },
+  {
+   "time": "2026-11-08T21:22:42Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 5,
+   "rc": 102,
+   "result": "rejected",
+   "text": "Oc 5 is already one of this triangulation's vertices. Fly to a NEW Oc and pull again."
+  },
+  {
+   "time": "2026-11-08T22:32:19Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 5,
+   "rc": 82,
+   "result": "rejected",
+   "text": "Oc 5 is already one of this triangulation's vertices. Fly to a NEW Oc and pull again."
+  },
+  {
+   "time": "2026-11-09T01:46:46Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 76,
+   "result": "rejected",
+   "text": "you are only 26 Rc from the last vertex (need at least 50 Rc ). Fly further out/in and pull again."
+  },
+  {
+   "time": "2026-11-09T03:53:59Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 47,
+   "result": "drift",
+   "roll": 95,
+   "threshold": 60.024
+  },
+  {
+   "time": "2026-11-09T04:23:20Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 47,
+   "result": "drift",
+   "roll": 72,
+   "threshold": 60.024
+  },
+  {
+   "time": "2026-11-09T05:07:14Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 47,
+   "result": "lock",
+   "step": 3
+  },
+  {
+   "time": "2026-11-09T09:52:49Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 5,
+   "rc": 164,
+   "result": "lock",
+   "step": 1
+  },
+  {
+   "time": "2026-11-09T10:45:25Z",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "oc": 5,
+   "rc": 99,
+   "result": "lock",
+   "step": 2
+  },
+  {
+   "time": "2026-11-09T14:00:48Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 4,
+   "rc": 215,
+   "result": "lock",
+   "step": 2
+  },
+  {
+   "time": "2026-11-09T14:40:46Z",
+   "player": "Horst",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 63,
+   "result": "drift",
+   "roll": 77,
+   "threshold": 65.04003112439062
+  },
+  {
+   "time": "2026-11-09T15:03:07Z",
+   "player": "Horst",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 63,
+   "result": "drift",
+   "roll": 93,
+   "threshold": 65.04003112439062
+  },
+  {
+   "time": "2026-11-09T15:29:29Z",
+   "player": "Horst",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 63,
+   "result": "lock",
+   "step": 1
+  },
+  {
+   "time": "2026-11-09T16:13:53Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 62,
+   "result": "drift",
+   "roll": 90,
+   "threshold": 60.024
+  },
+  {
+   "time": "2026-11-09T17:02:37Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 62,
+   "result": "drift",
+   "roll": 73,
+   "threshold": 60.024
+  },
+  {
+   "time": "2026-11-09T17:48:45Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 3,
+   "rc": 163,
+   "result": "drift",
+   "roll": 86,
+   "threshold": 81.79324999999966
+  },
+  {
+   "time": "2026-11-09T18:09:55Z",
+   "player": "Roxy",
+   "vessel": "SOLT-10",
+   "oc": 6,
+   "rc": 62,
+   "result": "lock",
+   "step": 1
+  },
+  {
+   "time": "2026-11-09T18:21:23Z",
+   "player": "lasergeek",
+   "vessel": "SOLT-04",
+   "oc": 3,
+   "rc": 163,
+   "result": "lock",
+   "step": 3
+  },
+  {
+   "time": "2026-11-10T14:31:14Z",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "oc": 4,
+   "rc": 48,
+   "result": "lock",
+   "step": 3
+  },
+  {
+   "time": "2026-11-10T15:05:00Z",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "oc": 4,
+   "rc": 48,
+   "result": "drift",
+   "roll": 94,
+   "threshold": 70.09856761199973
+  },
+  {
+   "time": "2026-11-10T15:36:55Z",
+   "player": "bartleby",
+   "vessel": "MMCS-01",
+   "oc": 4,
+   "rc": 48,
+   "result": "lock",
+   "step": 1
+  }
+ ],
+ "stations": [
+  {
+   "name": "Mercury Station",
+   "oc": 2,
+   "rc": 9,
+   "seen": "2026-11-05T22:58:38Z"
+  },
+  {
+   "name": "Mercury",
+   "oc": 2,
+   "rc": 9,
+   "seen": "2026-11-05T20:01:12Z"
+  },
+  {
+   "name": "Ratropia",
+   "oc": 2,
+   "rc": 30,
+   "seen": "2026-11-09T17:58:24Z"
+  },
+  {
+   "name": "Luna",
+   "oc": 2,
+   "rc": 30,
+   "seen": "2026-10-26T23:17:25Z"
+  },
+  {
+   "name": "Earth Station",
+   "oc": 2,
+   "rc": 30,
+   "seen": "2026-11-10T06:21:40Z"
+  },
+  {
+   "name": "Mars Station",
+   "oc": 4,
+   "rc": 49,
+   "seen": "2026-11-11T12:27:47Z"
+  },
+  {
+   "name": "Mars",
+   "oc": 4,
+   "rc": 49,
+   "seen": "2026-11-07T03:13:40Z"
+  },
+  {
+   "name": "Jupiter Station",
+   "oc": 5,
+   "rc": 164,
+   "seen": "2026-11-11T03:03:45Z"
+  },
+  {
+   "name": "Europa",
+   "oc": 5,
+   "rc": 164,
+   "seen": "2026-11-09T08:25:41Z"
+  }
+ ],
+ "players": {
+  "bartleby": {
+   "name": "bartleby",
+   "vessel": "MMCS-01",
+   "knw_personal": 10.099,
+   "threshold": 70.09856761199973
+  },
+  "Gainz": {
+   "name": "Gainz",
+   "vessel": "SOLT-06"
+  },
+  "Horst": {
+   "name": "Horst",
+   "vessel": "SOLT-10",
+   "knw_personal": 5.04,
+   "threshold": 65.04003112439062,
+   "follower_knowledge": 4,
+   "source": "AtomicHub follower card"
+  },
+  "lasergeek": {
+   "name": "lasergeek",
+   "vessel": "SOLT-04",
+   "knw_personal": 21.793,
+   "threshold": 81.79324999999966,
+   "follower_knowledge": 8,
+   "source": "AtomicHub follower card"
+  },
+  "MakerJay": {
+   "name": "MakerJay",
+   "vessel": "SOSS-03"
+  },
+  "Qukatt": {
+   "name": "Qukatt",
+   "vessel": "SOLV-16"
+  },
+  "Rojostormer": {
+   "name": "Rojostormer",
+   "vessel": "SOLV-102"
+  },
+  "Roxy": {
+   "name": "Roxy",
+   "knw_personal": 0.024,
+   "threshold": 60.024
+  },
+  "Zigm4": {
+   "name": "Zigm4",
+   "vessel": "SOLT-09",
+   "knw_personal": 5.0794,
+   "follower": "Ace",
+   "follower_knowledge": 1,
+   "source": "character sheet 2026-11-11"
+  }
+ },
+ "fast_jumps": {
+  "samples": 201,
+  "match_law": 191,
+  "mismatches": [
+   {
+    "from": 109,
+    "to": 123,
+    "delta": 14,
+    "law": 7,
+    "vessel": "SOSS-03",
+    "time": "2026-11-10T23:47:22Z"
+   },
+   {
+    "from": 123,
+    "to": 137,
+    "delta": 14,
+    "law": 7,
+    "vessel": "SOSS-03",
+    "time": "2026-11-10T23:59:23Z"
+   },
+   {
+    "from": 137,
+    "to": 152,
+    "delta": 15,
+    "law": 8,
+    "vessel": "SOSS-03",
+    "time": "2026-11-11T00:17:02Z"
+   },
+   {
+    "from": 152,
+    "to": 167,
+    "delta": 15,
+    "law": 8,
+    "vessel": "SOSS-03",
+    "time": "2026-11-11T00:35:15Z"
+   },
+   {
+    "from": 164,
+    "to": 148,
+    "delta": 16,
+    "law": 8,
+    "vessel": "SOSS-03",
+    "time": "2026-11-11T03:45:03Z"
+   },
+   {
+    "from": 148,
+    "to": 133,
+    "delta": 15,
+    "law": 8,
+    "vessel": "SOSS-03",
+    "time": "2026-11-11T03:45:07Z"
+   },
+   {
+    "from": 133,
+    "to": 118,
+    "delta": 15,
+    "law": 8,
+    "vessel": "SOSS-03",
+    "time": "2026-11-11T03:55:58Z"
+   },
+   {
+    "from": 118,
+    "to": 104,
+    "delta": 14,
+    "law": 7,
+    "vessel": "SOSS-03",
+    "time": "2026-11-11T04:08:10Z"
+   },
+   {
+    "from": 104,
+    "to": 91,
+    "delta": 13,
+    "law": 7,
+    "vessel": "SOSS-03",
+    "time": "2026-11-11T04:24:28Z"
+   },
+   {
+    "from": 91,
+    "to": 78,
+    "delta": 13,
+    "law": 7,
+    "vessel": "SOSS-03",
+    "time": "2026-11-11T04:36:15Z"
+   }
+  ]
+ }
+}

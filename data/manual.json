@@ -1,0 +1,85 @@
+{
+ "_doc": "Hand-kept public intelligence merged into docs/data/survey.json by tools/build_survey.py. hulks: notes per !enter code. extra_hulks: hulks not visible in the archive (own log). players: facts not readable in #spacecraft. gaps: archive holes. DM reports go to data/private.json (git-ignored).",
+ "hulks": {},
+ "extra_hulks": [
+  {
+   "code": "qnxs-03",
+   "cipher": "TRD-5XYD-UJPR",
+   "quality": "BLUE",
+   "player": "Zigm4",
+   "vessel": "SOLT-09",
+   "vertices": [
+    [
+     2,
+     164
+    ],
+    [
+     3,
+     215
+    ],
+    [
+     4,
+     163
+    ]
+   ],
+   "completed": "2026-11-12T02:22:53Z",
+   "decoded": "2026-11-12T02:33:51Z",
+   "decoded_by": "Zigm4",
+   "encrypted_data": 4,
+   "source": "SOLT-09 log",
+   "vertex_times": [
+    "2026-11-11T22:57:18Z",
+    "2026-11-12T00:39:21Z",
+    "2026-11-12T02:22:53Z"
+   ]
+  },
+  {
+   "code": "mrtg-03",
+   "cipher": "TRD-27ZD-QX8Y",
+   "quality": "BLUE",
+   "player": "Zigm4",
+   "vessel": "SOLT-09",
+   "vertices": [
+    [
+     4,
+     163
+    ],
+    [
+     5,
+     214
+    ],
+    [
+     6,
+     162
+    ]
+   ],
+   "completed": "2026-11-12T07:08:09Z",
+   "decoded": "2026-11-12T07:19:38Z",
+   "decoded_by": "Zigm4",
+   "encrypted_data": 9,
+   "source": "SOLT-09 log",
+   "vertex_times": [
+    "2026-11-12T02:56:56Z",
+    "2026-11-12T05:25:02Z",
+    "2026-11-12T07:08:09Z"
+   ]
+  }
+ ],
+ "players": {
+  "Zigm4": {
+   "knw_personal": 5.0794,
+   "follower": "Ace",
+   "follower_knowledge": 1,
+   "source": "character sheet 2026-11-11"
+  },
+  "Horst": {
+   "follower_knowledge": 4,
+   "source": "AtomicHub follower card"
+  },
+  "lasergeek": {
+   "follower_knowledge": 8,
+   "source": "AtomicHub follower card"
+  }
+ },
+ "gaps": []
+}
