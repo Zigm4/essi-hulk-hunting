@@ -40,6 +40,7 @@ RE_SYSCHECK_SHIP = re.compile(r'(?:resource check for|VESSEL CALLSIGN:)\s*(' + C
 RE_PILOT = re.compile(r'PILOT:\s*([A-Za-z0-9_.]+?)(?:#\d+)?\s')
 RE_LOCATION = re.compile(r'Current location:\s*>\s*([A-Z][A-Z ]+?)\s*<')
 RE_DOCKED = re.compile(r'made to ([A-Z][A-Z ]+?)\.')
+RE_ORBIT = re.compile(r'NOW ORBITING:\s*>\s*([A-Z][A-Z ]+?)\s*<.*?Current coordinates:\s*(\d+(?:\.\d+)?)', re.S)
 RE_MENU = re.compile(r'^\s*(' + CALLSIGN + r'):\s*Available Comms Hardpoints')
 RE_LOCK = re.compile(r'(' + CALLSIGN + r'):\s*.*?TRIANGULATION\s*(\d)\s*/\s*(\d)\s*locked at\s*Oc\s*(\d+)\s*/\s*Rc\s*(\d+)')
 RE_DRIFT = re.compile(r'(' + CALLSIGN + r'):\s*Calibration drifted.*?KNW roll\s*(\d+)\s*vs\s*([\d.]+)')
@@ -51,6 +52,16 @@ RE_ENTER_CMD = re.compile(r'^\s*[.!]enter\s+([A-Za-z0-9_-]+)', re.I)
 RE_COMMAND = re.compile(r'^\s*[.!]\S')
 SCANNING = 'HULK scanning'
 NO_HULK = 'No derelict hulks detected'
+
+
+def parse_coords(text):
+    """Game coordinates `Oc.RRRRRRRR` (Oc + Rc / 100,000,000, trailing zeros dropped): '2.0000003' → (2, 30)."""
+    try:
+        value = float(text)
+    except ValueError:
+        return None, None
+    oc = int(value)
+    return oc, int(round((value - oc) * 1e8))
 
 
 def snowflake_time(mid):
@@ -101,6 +112,7 @@ class Survey:
         self.calibration = []
         self.entries = []
         self.stations = {}
+        self.station_log = []         # every position read for a station or moon (planet model check)
         self.jumps = []
         self.players = {}
         self.first = self.last = None
@@ -194,14 +206,19 @@ class Survey:
                 self.set_pos(v, int(sc.group(1)), int(sc.group(2)))
                 loc = RE_LOCATION.search(text)
                 if loc:
-                    self.station(loc.group(1), int(sc.group(1)), int(sc.group(2)), t)
+                    self.station(loc.group(1), int(sc.group(1)), int(sc.group(2)), t, 'launch check')
         dk = RE_DOCKED.search(text)
         if dk:
             p = self.recent(r'[.!]\d+', t, 120)
             v = self.player_vessel.get(p)
             oc, rc = self.where(v)
             if rc is not None:
-                self.station(dk.group(1), oc, rc, t)
+                self.station(dk.group(1), oc, rc, t, 'docking')
+        ob = RE_ORBIT.search(text)
+        if ob:
+            oc, rc = parse_coords(ob.group(2))
+            if oc:
+                self.station(ob.group(1), oc, rc, t, 'orbit insertion')
 
         # comms: hardpoint menu, scanner
         m = RE_MENU.match(rec.get('title') or content)
@@ -271,9 +288,10 @@ class Survey:
             self.decodes[dc.group(1)] = {'code': dc.group(2).lower(), 'time': iso(t),
                                          'by': self.recent(r'[.!]unpack', t)}
 
-    def station(self, name, oc, rc, t):
+    def station(self, name, oc, rc, t, source):
         name = ' '.join(name.split()).title()
         self.stations[name] = {'name': name, 'oc': oc, 'rc': rc, 'seen': iso(t)}
+        self.station_log.append({'time': iso(t), 'name': name, 'oc': oc, 'rc': rc, 'source': source})
 
     # --- result -------------------------------------------------------------
     def result(self, manual):
@@ -327,6 +345,7 @@ class Survey:
             'entries': self.entries,
             'calibration': self.calibration,
             'stations': sorted(self.stations.values(), key=lambda s: (s['rc'] or 0)),
+            'station_log': self.station_log,
             'players': dict(sorted(self.players.items(), key=lambda kv: kv[0].lower())),
             'fast_jumps': {'samples': len(self.jumps), 'match_law': good,
                            'mismatches': [j for j in self.jumps if j['delta'] != j['law']][:50]},

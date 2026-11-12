@@ -60,7 +60,7 @@
    "body": [
     "Codes come in decode order inside each family: mrtg-01 (09/11), mrtg-02 (09/11), mrtg-03 (12/11); qnxs-01 (08/11) then qnxs-03 (12/11). A qnxs-02 was therefore decoded somewhere outside this archive.",
     "The DM decode reports name the class: mrtg-03 is an `MRT Goliath`, qnxs-03 a `QNX Seeker`. So the first three letters are the faction (MRT, QNX, LYC for Lycanox) and the fourth the class: g = Goliath, s = Seeker. mrts-01 should be an MRT Seeker, lycl-01 a Lycanox L-class.",
-    "Reports also carry a status (`DEFENDED`, `RADIATING`) and coordinates written `Oc.000000Rc` (for example `5.00000062` would be Oc 5 / Rc 62). Boarding: fly there, `!exit` the vessel, then `!enter <code>`."
+    "Reports also carry a status (`DEFENDED`, `RADIATING`) and coordinates written `Oc.RRRRRRRR`, Oc plus Rc / 100,000,000 (for example `5.00000062` would be Oc 5 / Rc 62). Boarding: fly there, `!exit` the vessel, then `!enter <code>`."
    ]
   },
   {
@@ -115,9 +115,9 @@
    "confidence": "confirmed",
    "title": "Planet positions follow the real solar system",
    "body": [
-    "The game places the planets where they really are around the Sun: Oc = heliocentric ecliptic longitude / 30° + 1 (Oc 1 covers 0-30°), Rc = distance in the ecliptic plane in miles / 3,000,000, rounded down (1 AU ≈ 31 SL).",
-    "Checked on 36 positions read in #spacecraft from 03/10 to 11/11 (Mercury, Earth, Luna, Ratropia, Mars, Jupiter, Europa): 35 identical. The exception is Mars Station on 12/10, still shown in Oc 3 about 1.7 days after Mars crossed into Oc 4: the game seems to refresh planet positions with a delay.",
-    "The chart computes the planets on your own device from JPL orbital elements, for the date picked on the timeline. Compared with the DE421 ephemeris over two years, the sector always matches; Rc can be one off near a boundary for the giant planets."
+    "The game places the planets where they really are around the Sun: Oc = heliocentric ecliptic longitude / 30° + 1 (Oc 1 covers 0-30°), Rc = distance in the ecliptic plane in miles / 3,000,000, rounded down (1 AU is about 31 SL). Game coordinates are also written `Oc.RRRRRRRR`, Oc plus Rc / 100,000,000: `2.0000003` is Oc 2 / Rc 30.",
+    "The chart computes the planets on your own device from JPL orbital elements, for the date picked on the timeline. Compared with the DE421 ephemeris over two years, the sector always matches; Rc can be one off near a boundary for the giant planets.",
+    "The Planet model check panel compares every station, moon and planet position read in #spacecraft (launch checks, dockings, orbit insertions) with the computed one. On 12/11: 121 of 125 identical. Three of the four mismatches sit right at a sector boundary: Mars Station still in Oc 3 about 1.7 days after Mars crossed into Oc 4 (12/10), Mercury Station already in Oc 4 about a day before Mercury got there (11/11). Near a boundary, trust the game's own readout over the chart."
    ]
   },
   {
@@ -141,6 +141,17 @@
    "body": [
     "Both SOLT-09 DM reports place the derelict inside its triangle, one of them right against a sector boundary.",
     "The centre of the triangle is only a first guess: the real positions were up to ~40 Rc away from it, and one sat in a neighbouring sector. Exact fixes stay classified on this site; the DM states that no one else has been told."
+   ]
+  },
+  {
+   "id": "FN-013",
+   "date": "2026-11-12",
+   "tag": "Scanner",
+   "confidence": "confirmed",
+   "title": "lasergeek starts sweeping near Earth",
+   "body": [
+    "SOLT-04 fitted a Salvage Scanner on hardpoint 4 on 11/11 at 23:15. Its first two sweeps on 12/11, from Oc 2 / Rc 30 and Oc 2 / Rc 17, came back empty: no derelict in Oc 2 below Rc 62 that morning.",
+    "No `!enter` has been posted in #spacecraft so far. Players who `!exit` their vessel at a station do it there, but boarding a derelict may happen in another channel."
    ]
   }
  ]

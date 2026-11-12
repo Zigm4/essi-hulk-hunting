@@ -112,4 +112,9 @@ assert sorted(h['code'] for h in s2['hulks']) == ['mrtg-09', 'qnxs-03']   # no d
 assert B.clean_name('@bartleby  👑') == 'bartleby' and B.clean_name('Roxy ◊') == 'Roxy'
 assert [B.fast_jump(r) for r in (30, 50, 160, 210)] == [4, 5, 8, 9]
 print('5 OK extra hulks merged without duplicates, names cleaned, jump law')
+assert [B.parse_coords(c) for c in ('5.00000164', '2.0000003', '4.00000049', '3.00000071')] == [(5, 164), (2, 30), (4, 49), (3, 71)]
+M2 = {mid(500): msg('⚫ UPBOT ⚫', 'PILOT: HORSTMAN5#0 NOW ORBITING: > EARTH STATION < ===== Event: Orbit Insertion Current body: > 306 (0)< Current coordinates: 2.0000003 ***** VESSEL CALLSIGN: SOLT-10')}
+s3 = B.build(M2)
+assert s3['station_log'] == [{'time': s3['station_log'][0]['time'], 'name': 'Earth Station', 'oc': 2, 'rc': 30, 'source': 'orbit insertion'}], s3['station_log']
+print('6 OK game coordinates Oc.RRRRRRRR and orbit insertions logged as station positions')
 print('All tests pass.')
