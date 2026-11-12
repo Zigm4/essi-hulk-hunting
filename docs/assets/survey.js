@@ -54,20 +54,5 @@
     if (el) el.innerHTML = `LAST ANALYSIS <b>${fmtTime(s.generated, true)}</b> · channel read up to ${fmtTime(s.coverage.to, true)} · archive since ${fmtTime(s.coverage.from, true)} · ${s.coverage.messages.toLocaleString('en')} messages · times in your local zone`;
   }
 
-  /* Theme picker: data-skin on <html>, remembered per browser (also ?skin=name in the address). */
-  function initSkins() {
-    const root = document.documentElement;
-    const buttons = [...document.querySelectorAll('.skins button[data-skin]')];
-    const mark = () => { const cur = root.dataset.skin || 'terminal'; buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.skin === cur))); };
-    buttons.forEach(b => b.addEventListener('click', () => {
-      root.dataset.skin = b.dataset.skin;
-      try { localStorage.setItem('essi-skin', b.dataset.skin); } catch (_) { /* storage blocked */ }
-      mark();
-      window.dispatchEvent(new Event('essi-skin'));
-    }));
-    mark();
-  }
-  initSkins();
-
   window.ESSI = {load, angle, toXY, toPolar, centroid, qColor, qStroke, QUALITIES, fmtTime, fmtPos, esc, stamp, analysisFooter};
 })();

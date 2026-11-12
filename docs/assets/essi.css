@@ -1,29 +1,6 @@
-/* ESSI Deep Survey: shared styles.
-   Layout: top bar (division, nav, theme picker, sync stamp), then each page's panes.
-   Every colour and typeface is a token; each theme (data-skin on <html>) redefines the whole set. */
-
-/* --- Terminal: amber CRT console (default) --------------------------------------------------- */
+/* ESSI Deep Survey: shared styles, Blueprint theme (cyanotype engineering plate).
+   Layout: top bar (division, nav, sync stamp), then each page's panes. Every colour and typeface is a token. */
 :root {
-  --bg: #090d12; --pane: #0e141b; --pane-2: #121a23; --line: #1e2a36; --grid: #16212c;
-  --text: #c9d4cc; --dim: #7d8b92;
-  --accent: #f2a93b; --accent-dim: #8a6127; --accent-2: #5fd0e3; --red: #ff6b5e; --empty: #7b8a99;
-  --glow: rgba(242, 169, 59, 0.05);
-  --q-BLACK: #05070a; --q-WHITE: #eef3f7; --q-BLUE: #4f8dff; --q-GREEN: #3ccf7a; --q-RED: #ff5d5d;
-  --q-PINK: #ff7fd8; --q-PURPLE: #ad84ff; --q-UNKNOWN: #7d8b92; --t-BLACK: #dfe6ff;
-  --p1: #2ee6c5; --p2: #f368e0; --p3: #54a0ff; --p4: #a3e635; --p5: #b18cff;
-  --p6: #ff7eb6; --p7: #7dffb3; --p8: #7fd6ff; --p9: #e8e8a0; --p10: #c9a0ff;
-  --pl-Mercury: #b9b1a6; --pl-Venus: #e8cf8a; --pl-Earth: #6fb6ff; --pl-Mars: #ff7b54;
-  --pl-Jupiter: #e6b98a; --pl-Saturn: #e9d9a6; --pl-Uranus: #9de0e6; --pl-Neptune: #7c95ff;
-  --font-display: "VT323", "JetBrains Mono", ui-monospace, Menlo, monospace;
-  --font-body: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-  --font-data: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-  --logo-size: 34px; --logo-track: 0.04em; --logo-weight: 400; --logo-style: normal;
-  --h2-track: 0.14em;
-  color-scheme: dark;
-}
-
-/* --- Blueprint: cyanotype engineering plate --------------------------------------------------- */
-:root[data-skin="blueprint"] {
   --bg: #0d2a4f; --pane: #10325c; --pane-2: #143b6a; --line: #3a5f8f; --grid: #22487a;
   --text: #eaf3ff; --dim: #9ab4d6;
   --accent: #ffe27a; --accent-dim: #a8924a; --accent-2: #9fe7ff; --red: #ff7a6b; --empty: #b8cde8;
@@ -37,76 +14,15 @@
   --font-display: "Saira Condensed", "Arial Narrow", sans-serif;
   --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
   --font-data: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --logo-size: 36px; --logo-track: 0.1em; --logo-weight: 700;
+  --logo-size: 36px; --logo-track: 0.1em; --logo-weight: 700; --logo-style: normal;
   --h2-track: 0.16em;
+  color-scheme: dark;
 }
-:root[data-skin="blueprint"] body {
+body {
   background-image: linear-gradient(rgba(159, 231, 255, 0.06) 1px, transparent 1px),
                     linear-gradient(90deg, rgba(159, 231, 255, 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-
-/* --- Salvage: graphite hull plating and hazard yellow ------------------------------------------ */
-:root[data-skin="salvage"] {
-  --bg: #151618; --pane: #1c1e21; --pane-2: #23262a; --line: #363a40; --grid: #26292e;
-  --text: #ece7da; --dim: #918b7e;
-  --accent: #ffc61a; --accent-dim: #8a6d12; --accent-2: #7fc8c2; --red: #ff5f4a; --empty: #8a8f98;
-  --glow: rgba(255, 198, 26, 0.04);
-  --q-BLACK: #0a0a0a; --q-WHITE: #f4f1ea; --q-BLUE: #5b9bff; --q-GREEN: #57d18a; --q-RED: #ff5f4a;
-  --q-PINK: #ff86c8; --q-PURPLE: #b18cff; --q-UNKNOWN: #918b7e; --t-BLACK: #e6e6e6;
-  --p1: #4fd1c5; --p2: #ff7aa2; --p3: #7aa2ff; --p4: #b4e05a; --p5: #c792ea;
-  --p6: #f5a9ff; --p7: #8de0ff; --p8: #a0e8af; --p9: #ffb3c7; --p10: #9ab0ff;
-  --font-display: "Big Shoulders Stencil Display", "Impact", sans-serif;
-  --font-body: "Barlow", "Helvetica Neue", Arial, sans-serif;
-  --font-data: "Martian Mono", "JetBrains Mono", ui-monospace, monospace;
-  --logo-size: 40px; --logo-track: 0.06em; --logo-weight: 800;
-  --h2-track: 0.18em;
-}
-:root[data-skin="salvage"] .topbar::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 6px;
-  background: repeating-linear-gradient(-45deg, var(--accent) 0 10px, #111214 10px 20px);
-}
-:root[data-skin="salvage"] .pane { border-top: 2px solid var(--accent-dim); }
-
-/* --- Flight chart: aeronautical sectional, light paper and magenta ----------------------------- */
-:root[data-skin="flight"] {
-  --bg: #f3f4ef; --pane: #fbfbf7; --pane-2: #eceee6; --line: #c6cbbf; --grid: #dfe3d8;
-  --text: #1a1e24; --dim: #5f6772;
-  --accent: #c2185b; --accent-dim: #e7a3c0; --accent-2: #1559b5; --red: #d93838; --empty: #6b7686;
-  --glow: rgba(21, 89, 181, 0.05);
-  --q-BLACK: #111418; --q-WHITE: #ffffff; --q-BLUE: #1f6fe0; --q-GREEN: #1d9a52; --q-RED: #d93838;
-  --q-PINK: #e0479a; --q-PURPLE: #7c3aed; --q-UNKNOWN: #8a929c; --t-BLACK: #111418;
-  --p1: #0f9488; --p2: #2563eb; --p3: #9333ea; --p4: #65a30d; --p5: #ea580c;
-  --p6: #0891b2; --p7: #b45309; --p8: #4f46e5; --p9: #15803d; --p10: #be123c;
-  --pl-Mercury: #7d756b; --pl-Venus: #b8902a; --pl-Earth: #2f78c4; --pl-Mars: #d0532c;
-  --pl-Jupiter: #a87a45; --pl-Saturn: #a8945a; --pl-Uranus: #2b9aa6; --pl-Neptune: #4256c9;
-  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --font-body: "Barlow", "Helvetica Neue", Arial, sans-serif;
-  --font-data: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --logo-size: 36px; --logo-track: 0.08em; --logo-weight: 700;
-  --h2-track: 0.14em;
-  color-scheme: light;
-}
-:root[data-skin="flight"] .pane { box-shadow: 0 1px 0 var(--line); }
-:root[data-skin="flight"] .brand .logo { border-bottom: 3px solid var(--accent-2); padding-bottom: 2px; }
-
-/* --- Observatory: red-light dome at night ---------------------------------------------------- */
-:root[data-skin="observatory"] {
-  --bg: #0a0505; --pane: #110909; --pane-2: #190d0d; --line: #3b1c1a; --grid: #221110;
-  --text: #f2ddd6; --dim: #a6837b;
-  --accent: #ff5a45; --accent-dim: #7a2a21; --accent-2: #ffb59c; --red: #ff4d3d; --empty: #9b6f68;
-  --glow: rgba(255, 90, 69, 0.07);
-  --q-BLACK: #000000; --q-WHITE: #fff3ee; --q-BLUE: #6f9cff; --q-GREEN: #57d18a; --q-RED: #ff4d3d;
-  --q-PINK: #ff8fc8; --q-PURPLE: #b993ff; --q-UNKNOWN: #a6837b; --t-BLACK: #f2ddd6;
-  --p1: #7fd8c9; --p2: #ffd27f; --p3: #c3a6ff; --p4: #9fd36b; --p5: #8fd3ff;
-  --p6: #ff8fb1; --p7: #f5b8ff; --p8: #c8f08f; --p9: #ffc8a8; --p10: #a8e8ff;
-  --font-display: "Instrument Serif", Georgia, serif;
-  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
-  --font-data: "JetBrains Mono", ui-monospace, Menlo, monospace;
-  --logo-size: 42px; --logo-track: 0.02em; --logo-weight: 400; --logo-style: italic;
-  --h2-track: 0.2em;
-}
-:root[data-skin="observatory"] body { background-image: radial-gradient(ellipse at 50% -10%, rgba(255, 90, 69, 0.08), transparent 55%); background-attachment: fixed; }
 
 /* --- Shared rules ------------------------------------------------------------------------------ */
 * { box-sizing: border-box; }
@@ -118,10 +34,6 @@ body {
   font-variant-numeric: tabular-nums;
 }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
-:root:not([data-skin]) body::after, :root[data-skin="terminal"] body::after {   /* faint scanlines, terminal only */
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50;
-  background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.018) 0 1px, transparent 1px 3px);
-}
 a { color: var(--accent-2); text-decoration: none; }
 a:hover { text-decoration: underline; }
 :focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
@@ -148,11 +60,6 @@ nav { display: flex; gap: 4px; }
 nav a { padding: 4px 10px; border: 1px solid var(--line); color: var(--dim); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
 nav a[aria-current="page"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 nav a:hover { text-decoration: none; color: var(--text); }
-.skins { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
-.skins .lbl { font-size: 10.5px; letter-spacing: 0.14em; color: var(--dim); text-transform: uppercase; margin-right: 4px; }
-.skins button { font: inherit; font-family: var(--font-data); font-size: 11px; color: var(--dim); background: transparent; border: 1px solid var(--line); padding: 2px 8px; cursor: pointer; }
-.skins button[aria-pressed="true"] { color: var(--text); border-color: var(--accent); background: var(--pane-2); }
-.skins button:hover { color: var(--text); }
 .sync { margin-left: auto; font-size: 11px; color: var(--dim); letter-spacing: 0.06em; }
 .sync b { color: var(--accent-2); font-weight: 500; }
 @media (max-width: 720px) { .sync { margin-left: 0; width: 100%; } .topbar { position: static; } .brand .logo { font-size: calc(var(--logo-size) * 0.82); } }
