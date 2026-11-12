@@ -13,7 +13,8 @@
   }
   E.stamp(S);
 
-  const PALETTE = ['#ff9f43', '#2ee6c5', '#f368e0', '#feca57', '#54a0ff', '#a3e635', '#ff6b6b', '#c8a2ff', '#48dbfb', '#ffd1a1'];
+  // No amber/orange: that hue already means 'sweep with no reply' and UI accents.
+  const PALETTE = ['#2ee6c5', '#f368e0', '#54a0ff', '#a3e635', '#b18cff', '#ff7eb6', '#7dffb3', '#7fd6ff', '#e8e8a0', '#c9a0ff'];
   const PLANET_COLORS = {Mercury: '#b9b1a6', Venus: '#e8cf8a', Earth: '#6fb6ff', Mars: '#ff7b54', Jupiter: '#e6b98a', Saturn: '#e9d9a6', Uranus: '#9de0e6', Neptune: '#7c95ff'};
   const STATION_HINTS = {Mercury: /mercury/i, Earth: /earth|luna|ratropia/i, Mars: /mars/i, Jupiter: /jupiter|europa/i};
   const PERIOD_DAYS = {Mercury: 88, Venus: 225, Earth: 365.25, Mars: 687, Jupiter: 4333, Saturn: 10759, Uranus: 30687, Neptune: 60190};
@@ -64,7 +65,7 @@
   const LAYERS = [
     ['hulks', 'Derelicts', true], ['triangles', 'Triangulations (colour = signaller)', true],
     ['vertices', 'Triangulation points', true], ['open', 'Open triangulations', true],
-    ['empty', `Empty sweeps (Rc ± ${RANGE})`, true], ['unanswered', 'Unanswered sweeps', true],
+    ['empty', `No-derelict sweeps (Rc ± ${RANGE})`, true], ['unanswered', 'Unanswered sweeps', true],
     ['planets', 'Planets (computed)', true], ['orbits', 'Planet orbits', true], ['labels', 'Labels', true],
   ];
   const qualities = [...new Set(S.hulks.map(h => h.quality || 'UNKNOWN'))].sort((a, b) => E.QUALITIES.indexOf(a) - E.QUALITIES.indexOf(b));
@@ -227,6 +228,14 @@
           }
           out.push('</g>');
         }
+      }
+    }
+    if (st.layers.empty) {
+      for (const x of empties.filter(sweepVisible)) {
+        const [mx, my] = polarS(x.oc, x.rc), c = pColor(x.player), on = st.sel === x.id;
+        out.push(`<g data-id="${x.id}"><circle cx="${f1(mx)}" cy="${f1(my)}" r="9" fill="transparent"/>` +
+          `<circle cx="${f1(mx)}" cy="${f1(my)}" r="${on ? 6.5 : 5.5}" fill="var(--bg)" stroke="${on ? 'var(--amber)' : c}" stroke-width="1.6"/>` +
+          `<line x1="${f1(mx - 3.6)}" y1="${f1(my + 3.6)}" x2="${f1(mx + 3.6)}" y2="${f1(my - 3.6)}" stroke="${on ? 'var(--amber)' : c}" stroke-width="1.6"/></g>`);
       }
     }
     if (st.layers.unanswered) {
@@ -393,7 +402,7 @@
         `<div><span style="color:${pColor(r.item.player)}">■</span> ${E.esc(r.item.player || '?')} · ${E.esc(r.kind === 'hulk' ? (r.item.code || r.item.cipher) : 'open')} point ${r.step}/3${r.time ? ' · ' + E.fmtTime(r.time) : ''}</div>`).join('');
     }
     if (kind === 'hulk') return `<b>${E.esc(item.code || item.cipher)}</b> · ${item.hull_color ? `${E.esc(item.hull_class)} <span style="color:${E.qStroke(item.hull_color)}">${E.esc(item.hull_color)}</span>` : `cipher ${E.esc(item.quality || '?')}, hull colour unknown`}<div><span style="color:${pColor(item.player)}">■</span> ${E.esc(item.player || '?')} · ${E.fmtPos(item.pos)}${item.pos.exact ? '' : ' (centre of triangle)'}</div>`;
-    if (kind === 'sweep') return `Sweep ${E.fmtTime(item.time)} · ${E.fmtPos(item)} · ${item.result === 'empty' ? 'no derelict' : 'no reply posted'}`;
+    if (kind === 'sweep') return `<b>${item.result === 'empty' ? 'No derelict' : 'Sweep, no reply posted'}</b> · <span style="color:${pColor(item.player)}">■</span> ${E.esc(item.player || '?')} (${E.esc(item.vessel || '?')})<div>${E.fmtTime(item.time)} · from ${E.fmtPos(item)} · covers Oc ${item.oc}, Rc ${Math.max(1, item.rc - RANGE)} to ${item.rc + RANGE}</div>`;
     if (kind === 'planet') { const p = planetNow(item.name); return `<b>${E.esc(item.name)}</b> Oc ${p.oc} / Rc ${p.rc}<div class="dim">longitude ${p.lon.toFixed(1)}° · ${p.sl.toFixed(2)} SL · ${live() ? 'now' : E.fmtTime(asOfTime())}</div>`; }
     return `<span style="color:${pColor(item.player)}">■</span> ${E.esc(item.player || '?')} · triangulation ${item.vertices.length}/3`;
   }
@@ -480,7 +489,7 @@
 
   const layersBox = document.getElementById('layers');
   layersBox.innerHTML = LAYERS.map(([k, name]) => `<label class="check"><input type="checkbox" id="layer-${k}" data-layer="${k}" ${st.layers[k] ? 'checked' : ''}> ${E.esc(name)}</label>`).join('');
-  layersBox.addEventListener('change', e => { const k = e.target.dataset.layer; if (k) { st.layers[k] = e.target.checked; draw(); } });
+  layersBox.addEventListener('change', e => { const k = e.target.dataset.layer; if (k) { st.layers[k] = e.target.checked; renderTargets(); draw(); } });
   const fq = document.getElementById('fq');
   fq.innerHTML = qualities.map(q => `<button class="chip" data-q="${q}" aria-pressed="true"><span class="sw" style="background:${E.qColor(q)}"></span>${q}</button>`).join('');
   fq.addEventListener('click', e => { const b = e.target.closest('[data-q]'); if (b) toggle(st.q, b.dataset.q, b); });
@@ -508,6 +517,7 @@
     const list = [
       ...hulks.filter(hulkVisible).map(h => ({id: h.id, t: h.time, html: `<span class="mark" style="${markStyle(h)}"></span><span>${E.esc(h.code || 'pending ' + h.cipher)} <span class="k" style="color:${pColor(h.player)}">${E.esc(h.player || '')}</span></span><span class="k">${E.fmtPos(h.pos)}</span>`})),
       ...unanswered.filter(sweepVisible).map(x => ({id: x.id, t: x.time, html: `<span class="mark sweep"></span><span>sweep ? ${E.fmtTime(x.time)}</span><span class="k">${E.fmtPos(x)}</span>`})),
+      ...(st.layers.empty ? empties.filter(sweepVisible) : []).map(x => ({id: x.id, t: x.time, html: `<span class="mark nohulk" style="--c:${pColor(x.player)}"></span><span>no derelict ${E.fmtTime(x.time)} <span class="k" style="color:${pColor(x.player)}">${E.esc(x.player || '')}</span></span><span class="k">${E.fmtPos(x)}</span>`})),
     ].sort((a, b) => (b.t || '').localeCompare(a.t || ''));
     const pl = planets().map(p => ({id: `planet-${p.name}`, html: `<span class="mark planet" style="background:${PLANET_COLORS[p.name]}"></span><span>${p.name}</span><span class="k">Oc ${p.oc} / Rc ${p.rc}</span>`}));
     targets.innerHTML = list.concat(pl).map(t => `<button class="target${t.id === st.sel ? ' on' : ''}" data-id="${t.id}">${t.html}</button>`).join('') || '<p class="empty-state">No target matches the filters.</p>';
