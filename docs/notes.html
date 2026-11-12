@@ -8,27 +8,28 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23090d12'/%3E%3Cpath d='M8 2 L14 8 L8 14 L2 8 Z' fill='none' stroke='%23f2a93b' stroke-width='1.6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=VT323&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=VT323&family=Saira+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Big+Shoulders+Stencil+Display:wght@700;800&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&family=Martian+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap">
+<script>try { var s = new URLSearchParams(location.search).get("skin") || localStorage.getItem("essi-skin"); if (s) document.documentElement.dataset.skin = s; } catch (e) {}</script>
 <link rel="stylesheet" href="assets/essi.css">
 <style>
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); gap: 14px; align-items: start; }
 .bar { position: relative; height: 10px; background: var(--grid); min-width: 120px; }
-.bar .exp { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--amber); }
-.bar .obs { position: absolute; left: 0; top: 0; bottom: 0; background: var(--cyan); opacity: 0.8; }
+.bar .exp { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--accent); }
+.bar .obs { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent-2); opacity: 0.8; }
 .legend-inline { font-size: 11.5px; color: var(--dim); display: flex; gap: 16px; flex-wrap: wrap; }
 .legend-inline i { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; }
 .notes { display: grid; gap: 12px; }
 .note { border: 1px solid var(--line); background: var(--pane); padding: 12px 14px; display: grid; gap: 8px; }
 .note .head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
-.note .id { color: var(--amber); font-size: 12px; letter-spacing: 0.08em; }
+.note .id { color: var(--accent); font-size: 12px; letter-spacing: 0.08em; }
 .note .date { color: var(--dim); font-size: 11.5px; }
 .note h3 { font-size: 14.5px; flex-basis: 100%; }
 .note p { font-size: 13px; }
-.note code, .pane code { color: var(--cyan); background: var(--pane-2); padding: 0 4px; }
+.note code, .pane code { color: var(--accent-2); background: var(--pane-2); padding: 0 4px; }
 .notefilter { display: flex; flex-wrap: wrap; gap: 6px; }
 .kpis { display: flex; flex-wrap: wrap; gap: 10px 28px; }
 .kpi { display: grid; }
-.kpi b { font-family: var(--font-display); font-size: 30px; line-height: 1; color: var(--amber); font-weight: 400; }
+.kpi b { font-family: var(--font-display); font-size: 30px; line-height: 1; color: var(--accent); font-weight: 400; }
 .kpi span { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; text-transform: uppercase; }
 </style>
 </head>
@@ -37,6 +38,7 @@
   <div class="topbar">
     <div class="brand"><span class="logo">HULK HUNTING</span><span class="div">EastShire Space Industries · Deep Survey Division</span></div>
     <nav aria-label="Pages"><a href="index.html">Chart</a><a href="notes.html" aria-current="page">Field notes</a></nav>
+    <div class="skins" role="group" aria-label="Theme"><span class="lbl">Theme</span><button data-skin="terminal">Terminal</button><button data-skin="blueprint">Blueprint</button><button data-skin="salvage">Salvage</button><button data-skin="flight">Flight chart</button><button data-skin="observatory">Observatory</button></div>
     <div class="sync" id="sync">DATA SYNC …</div>
   </div>
 
@@ -51,7 +53,7 @@
     <section class="pane" aria-label="Calibration rolls">
       <header><h2>Calibration · KNW rolls</h2><span class="meta">threshold = 60 + personal KNW of the signaller</span></header>
       <div class="body">
-        <div class="legend-inline"><span><i style="background:var(--cyan)"></i>observed lock rate</span><span><i style="background:var(--amber)"></i>expected (threshold %)</span></div>
+        <div class="legend-inline"><span><i style="background:var(--accent-2)"></i>observed lock rate</span><span><i style="background:var(--accent)"></i>expected (threshold %)</span></div>
         <div class="tablebox"><table id="calib"></table></div>
         <p class="dim" style="font-size:12px">Attempts = locks + drifts on the Triadic Signal Array. Rejections (wrong Oc, gap under 50 Rc) are counted apart: they are not rolls.</p>
       </div>

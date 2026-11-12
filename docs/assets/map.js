@@ -13,9 +13,9 @@
   }
   E.stamp(S);
 
-  // No amber/orange: that hue already means 'sweep with no reply' and UI accents.
-  const PALETTE = ['#2ee6c5', '#f368e0', '#54a0ff', '#a3e635', '#b18cff', '#ff7eb6', '#7dffb3', '#7fd6ff', '#e8e8a0', '#c9a0ff'];
-  const PLANET_COLORS = {Mercury: '#b9b1a6', Venus: '#e8cf8a', Earth: '#6fb6ff', Mars: '#ff7b54', Jupiter: '#e6b98a', Saturn: '#e9d9a6', Uranus: '#9de0e6', Neptune: '#7c95ff'};
+  // Signaller colours and planet colours come from the theme (--p1..--p10, --pl-<Planet>).
+  const PALETTE = Array.from({length: 10}, (_, i) => `var(--p${i + 1})`);
+  const PLANET_COLORS = Object.fromEntries(P.NAMES.map(n => [n, `var(--pl-${n})`]));
   const STATION_HINTS = {Mercury: /mercury/i, Earth: /earth|luna|ratropia/i, Mars: /mars/i, Jupiter: /jupiter|europa/i};
   const PERIOD_DAYS = {Mercury: 88, Venus: 225, Earth: 365.25, Mars: 687, Jupiter: 4333, Saturn: 10759, Uranus: 30687, Neptune: 60190};
 
@@ -33,7 +33,7 @@
   hulks.forEach(h => seen(h.player, (h.vertex_times || [])[0] || h.completed));
   openTri.forEach(t => seen(t.player, (t.times || [])[0] || t.updated));
   const triPlayers = [...firstSeen.keys()].sort((a, b) => firstSeen.get(a).localeCompare(firstSeen.get(b)));
-  const pColor = p => (triPlayers.includes(p) ? PALETTE[triPlayers.indexOf(p) % PALETTE.length] : '#9aa5ad');
+  const pColor = p => (triPlayers.includes(p) ? PALETTE[triPlayers.indexOf(p) % PALETTE.length] : 'var(--dim)');
 
   // One marker per distinct point; its tooltip lists every triangulation that locked it.
   const vertices = new Map();
@@ -153,10 +153,10 @@
       out.push(`<line x1="${f1(sunX)}" y1="${f1(sunY)}" x2="${f1(sunX + RMAX * s * Math.cos(a))}" y2="${f1(sunY - RMAX * s * Math.sin(a))}" stroke="var(--grid)" stroke-width="1"/>`);
       const lr = RMAX * s + 20, la = E.angle(oc);
       const lx = sunX + lr * Math.cos(la), ly = sunY - lr * Math.sin(la);
-      out.push(`<text x="${f1(lx)}" y="${f1(ly - 1)}" text-anchor="middle" font-size="13" fill="var(--amber)">${oc}</text>`);
+      out.push(`<text x="${f1(lx)}" y="${f1(ly - 1)}" text-anchor="middle" font-size="13" fill="var(--accent)">${oc}</text>`);
       out.push(`<text x="${f1(lx)}" y="${f1(ly + 11)}" text-anchor="middle" font-size="9.5" fill="var(--dim)">${E.esc(S.sectors[oc] || '')}</text>`);
     }
-    out.push(`<circle cx="${f1(sunX)}" cy="${f1(sunY)}" r="${Math.max(4, 3 * Math.sqrt(st.k))}" fill="var(--amber)"/>`);
+    out.push(`<circle cx="${f1(sunX)}" cy="${f1(sunY)}" r="${Math.max(4, 3 * Math.sqrt(st.k))}" fill="var(--accent)"/>`);
 
     if (st.layers.orbits) {
       for (const n of P.NAMES) {
@@ -168,12 +168,12 @@
     if (st.layers.empty) {
       for (const x of empties.filter(sweepVisible)) {
         const on = st.sel === x.id;
-        out.push(`<path d="${annulus(x.oc, Math.max(0, x.rc - RANGE), x.rc + RANGE)}" fill="url(#hatch)" stroke="${on ? 'var(--amber)' : 'var(--empty)'}" stroke-opacity="${on ? 1 : 0.35}" stroke-width="${on ? 1.6 : 1}" data-id="${x.id}"/>`);
+        out.push(`<path d="${annulus(x.oc, Math.max(0, x.rc - RANGE), x.rc + RANGE)}" fill="url(#hatch)" stroke="${on ? 'var(--accent)' : 'var(--empty)'}" stroke-opacity="${on ? 1 : 0.35}" stroke-width="${on ? 1.6 : 1}" data-id="${x.id}"/>`);
       }
     }
     if (st.layers.unanswered) {
       for (const x of unanswered.filter(sweepVisible)) {
-        out.push(`<path d="${annulus(x.oc, Math.max(0, x.rc - RANGE), x.rc + RANGE)}" fill="none" stroke="var(--amber)" stroke-opacity="${st.sel === x.id ? 0.9 : 0.35}" stroke-dasharray="4 4" data-id="${x.id}"/>`);
+        out.push(`<path d="${annulus(x.oc, Math.max(0, x.rc - RANGE), x.rc + RANGE)}" fill="none" stroke="var(--accent)" stroke-opacity="${st.sel === x.id ? 0.9 : 0.35}" stroke-dasharray="4 4" data-id="${x.id}"/>`);
       }
     }
     if (st.layers.triangles) {
@@ -212,7 +212,7 @@
         const w = lonXY(p.lon, p.sl);
         if (p.sl <= RMAX * 1.02) {
           const [x, y] = toS(w.x, w.y), r = p.name === 'Jupiter' ? 7 : 5;
-          out.push(`<g data-id="${id}"><circle cx="${f1(x)}" cy="${f1(y)}" r="${r + 5}" fill="transparent"/><circle cx="${f1(x)}" cy="${f1(y)}" r="${r}" fill="${c}" stroke="${on ? 'var(--amber)' : 'var(--bg)'}" stroke-width="${on ? 2 : 1.4}"/>`);
+          out.push(`<g data-id="${id}"><circle cx="${f1(x)}" cy="${f1(y)}" r="${r + 5}" fill="transparent"/><circle cx="${f1(x)}" cy="${f1(y)}" r="${r}" fill="${c}" stroke="${on ? 'var(--accent)' : 'var(--bg)'}" stroke-width="${on ? 2 : 1.4}"/>`);
           if (st.layers.labels) {
             const txt = `${p.name} ${p.oc}/${p.rc}`, ly = place(x + 10 + txt.length * 3.1, y - 8, txt.length * 6.3);
             out.push(`<text x="${f1(x + 10)}" y="${f1(ly)}" font-size="10.5" fill="${c}">${E.esc(txt)}</text>`);
@@ -234,14 +234,14 @@
       for (const x of empties.filter(sweepVisible)) {
         const [mx, my] = polarS(x.oc, x.rc), c = pColor(x.player), on = st.sel === x.id;
         out.push(`<g data-id="${x.id}"><circle cx="${f1(mx)}" cy="${f1(my)}" r="9" fill="transparent"/>` +
-          `<circle cx="${f1(mx)}" cy="${f1(my)}" r="${on ? 6.5 : 5.5}" fill="var(--bg)" stroke="${on ? 'var(--amber)' : c}" stroke-width="1.6"/>` +
-          `<line x1="${f1(mx - 3.6)}" y1="${f1(my + 3.6)}" x2="${f1(mx + 3.6)}" y2="${f1(my - 3.6)}" stroke="${on ? 'var(--amber)' : c}" stroke-width="1.6"/></g>`);
+          `<circle cx="${f1(mx)}" cy="${f1(my)}" r="${on ? 6.5 : 5.5}" fill="var(--bg)" stroke="${on ? 'var(--accent)' : c}" stroke-width="1.6"/>` +
+          `<line x1="${f1(mx - 3.6)}" y1="${f1(my + 3.6)}" x2="${f1(mx + 3.6)}" y2="${f1(my - 3.6)}" stroke="${on ? 'var(--accent)' : c}" stroke-width="1.6"/></g>`);
       }
     }
     if (st.layers.unanswered) {
       for (const x of unanswered.filter(sweepVisible)) {
         const [mx, my] = polarS(x.oc, x.rc);
-        out.push(`<g data-id="${x.id}"><circle cx="${f1(mx)}" cy="${f1(my)}" r="7.5" fill="var(--bg)" stroke="var(--amber)" stroke-width="${st.sel === x.id ? 2.4 : 1.5}"/><text x="${f1(mx)}" y="${f1(my + 3.5)}" text-anchor="middle" font-size="10" font-weight="600" fill="var(--amber)">?</text></g>`);
+        out.push(`<g data-id="${x.id}"><circle cx="${f1(mx)}" cy="${f1(my)}" r="7.5" fill="var(--bg)" stroke="var(--accent)" stroke-width="${st.sel === x.id ? 2.4 : 1.5}"/><text x="${f1(mx)}" y="${f1(my + 3.5)}" text-anchor="middle" font-size="10" font-weight="600" fill="var(--accent)">?</text></g>`);
       }
     }
     if (st.layers.hulks) {
@@ -257,14 +257,14 @@
           const h = v.h, on = st.sel === h.id;
           const x = c.x + (i - (c.items.length - 1) / 2) * 13, y = c.y;
           out.push(`<g data-id="${h.id}">`);
-          if (on) out.push(`<circle cx="${f1(x)}" cy="${f1(y)}" r="13" fill="none" stroke="var(--amber)" stroke-width="1.4"/>`);
+          if (on) out.push(`<circle cx="${f1(x)}" cy="${f1(y)}" r="13" fill="none" stroke="var(--accent)" stroke-width="1.4"/>`);
           out.push(`<rect x="${f1(x - 5.5)}" y="${f1(y - 5.5)}" width="11" height="11" transform="rotate(45 ${f1(x)} ${f1(y)})" fill="${hulkFill(h)}" stroke="${hulkStroke(h)}" stroke-width="1.5" stroke-dasharray="${h.hull_color ? '' : '2.5 2'}"/>`);
-          if (h.pos.exact) out.push(`<circle cx="${f1(x)}" cy="${f1(y)}" r="1.6" fill="var(--amber)"/>`);
+          if (h.pos.exact) out.push(`<circle cx="${f1(x)}" cy="${f1(y)}" r="1.6" fill="var(--accent)"/>`);
           if (st.layers.labels) {
             const ly = c.y - 14 - (c.items.length - 1 - i) * 13;
             const lx = right ? c.x + 16 : c.x - 16;
             const colour = h.hull_color ? `<tspan fill="${E.qStroke(h.hull_color)}"> ${E.esc(h.hull_color)}</tspan>` : (h.code ? `<tspan fill="var(--dim)"> cipher ${E.esc(h.quality)}</tspan>` : '<tspan fill="var(--dim)"> pending</tspan>');
-            out.push(`<text x="${f1(lx)}" y="${f1(ly)}" text-anchor="${right ? 'start' : 'end'}" font-size="11.5" fill="${on ? 'var(--amber)' : 'var(--text)'}">${E.esc(h.code || h.cipher.slice(4, 8))}${colour}</text>`);
+            out.push(`<text x="${f1(lx)}" y="${f1(ly)}" text-anchor="${right ? 'start' : 'end'}" font-size="11.5" fill="${on ? 'var(--accent)' : 'var(--text)'}">${E.esc(h.code || h.cipher.slice(4, 8))}${colour}</text>`);
           }
           out.push('</g>');
         });
