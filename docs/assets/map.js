@@ -56,7 +56,7 @@
   boot.innerHTML = [
     '&gt; ESSI/DSD derelict survey terminal · open-source intelligence from comms channel #spacecraft',
     `&gt; archive ${E.fmtTime(S.coverage.from, true)} to ${E.fmtTime(S.coverage.to, true)} · ${S.coverage.messages.toLocaleString('en')} messages <span class="ok">[OK]</span>`,
-    `&gt; derelicts resolved: <span class="ok">${S.hulks.filter(h => h.code).length}</span> · ciphers pending: <span class="warn">${S.hulks.filter(h => !h.code).length}</span> · triangulations: ${hulks.length + openTri.length} by ${triPlayers.length} signallers · sweeps: ${S.scans.length} · boardings seen: ${S.entries.length}`,
+    `&gt; derelicts resolved: <span class="ok">${S.hulks.filter(h => h.code).length}</span> · ciphers pending: <span class="warn">${S.hulks.filter(h => !h.code).length}</span> · triangulations: ${hulks.length + openTri.length} by ${triPlayers.length} signallers · sweeps: ${S.scans.length}`,
     '&gt; planetary ephemeris computed on this terminal (JPL Keplerian elements) <span class="ok">[OK]</span>',
     '&gt; chart ready<span class="cursor"></span>',
   ].map(l => `<div>${l}</div>`).join('');
@@ -428,7 +428,6 @@
         item.exact_known && !item.pos.exact ? ['Exact fix', 'on file, classified (private DM)'] : null,
         ['Decoded', item.decoded ? `${E.fmtTime(item.decoded, true)}${item.decoded_by ? ' by ' + E.esc(item.decoded_by) : ''}` : 'not yet'],
         ['Encrypted data', item.encrypted_data != null ? `+${item.encrypted_data}` : '-'],
-        ['Boardings', item.entries && item.entries.length ? item.entries.map(t => E.fmtTime(t, true)).join(', ') : 'none seen'],
         item.code ? ['Enter with', `<code>!enter ${E.esc(item.code)}</code>`] : null,
       ]) + (item.note ? `<p class="note">${E.esc(item.note)}</p>` : '');
     } else if (kind === 'vertex') {
@@ -532,12 +531,12 @@
   const qcell = q => (q ? `<span class="q"><i style="background:${E.qColor(q)}"></i>${E.esc(q)}</span>` : '<span class="dim">-</span>');
   function renderTables() {
     const reg = document.getElementById('registry');
-    reg.innerHTML = '<thead><tr><th>Code</th><th>Hull (DM)</th><th>Cipher quality</th><th>Signaller</th><th>Vessel</th><th>Points (Oc/Rc)</th><th>Position</th><th>Decoded</th><th>Cipher</th><th>Boarded</th></tr></thead><tbody>' +
+    reg.innerHTML = '<thead><tr><th>Code</th><th>Hull (DM)</th><th>Cipher quality</th><th>Signaller</th><th>Vessel</th><th>Points (Oc/Rc)</th><th>Position</th><th>Decoded</th><th>Cipher</th></tr></thead><tbody>' +
       S.hulks.filter(hulkVisible).slice().sort((a, b) => (b.time || '').localeCompare(a.time || '')).map(h => `<tr data-row="${h.id}" class="${h.id === st.sel ? 'on' : ''}">` +
         `<td>${E.esc(h.code || '-')}</td><td>${h.hull_class ? `${qcell(h.hull_color)} <span class="dim">${E.esc(h.hull_class)}</span>` : '<span class="dim">unknown</span>'}</td><td>${qcell(h.quality)}</td>` +
         `<td><span style="color:${pColor(h.player)}">■</span> ${E.esc(h.player || '?')}</td><td class="dim">${E.esc(h.vessel || '?')}</td>` +
         `<td>${h.vertices.map(([o, r]) => `${o}/${r}`).join(' · ') || '-'}</td><td>${h.pos ? E.fmtPos(h.pos) + (h.pos.exact ? '' : h.exact_known ? ' <span class="dim">◇ fix classified</span>' : ' <span class="dim">◇</span>') : '-'}</td>` +
-        `<td>${h.decoded ? E.fmtTime(h.decoded) : '<span class="amber">pending</span>'}</td><td class="dim">${E.esc(h.cipher || '-')}</td><td>${h.entries && h.entries.length ? h.entries.length : '<span class="dim">no</span>'}</td></tr>`).join('') + '</tbody>';
+        `<td>${h.decoded ? E.fmtTime(h.decoded) : '<span class="amber">pending</span>'}</td><td class="dim">${E.esc(h.cipher || '-')}</td></tr>`).join('') + '</tbody>';
     const sw = document.getElementById('sweeps');
     sw.innerHTML = '<thead><tr><th>Time</th><th>Vessel</th><th>Signaller</th><th>From</th><th>Covers</th><th>Result</th></tr></thead><tbody>' +
       S.scans.filter(sweepVisible).slice().reverse().map(x => `<tr data-row="${x.id}" class="${x.id === st.sel ? 'on' : ''}"><td>${E.fmtTime(x.time)}</td><td class="dim">${E.esc(x.vessel || '?')}</td><td>${E.esc(x.player || '?')}</td>` +

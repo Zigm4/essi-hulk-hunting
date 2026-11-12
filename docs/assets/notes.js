@@ -58,7 +58,6 @@
     [S.hulks.filter(h => h.code).length, 'derelicts decoded'],
     [`${locks}/${locks + drifted}`, 'calibrations locked'],
     [S.scans.filter(x => x.result === 'empty').length, 'empty sweeps'],
-    [S.entries.length, 'boardings seen'],
     [N.notes.length, 'field notes'],
   ].map(([v, l]) => `<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join('');
 
