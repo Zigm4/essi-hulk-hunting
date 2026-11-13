@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-13T08:57:50Z",
+ "generated": "2026-11-13T09:17:35Z",
  "coverage": {
   "from": "2026-08-29T08:36:43Z",
   "to": "2026-11-13T07:21:23Z",
@@ -2088,6 +2088,22 @@
    "oc": 2,
    "rc": 30,
    "source": "orbit insertion"
+  }
+ ],
+ "contacts": [
+  {
+   "id": "contact-5-55",
+   "oc": 5,
+   "rc": 55,
+   "rc_min": 54,
+   "rc_max": 56,
+   "confidence": "high",
+   "candidates": [
+    "mrtg-01",
+    "mrts-01"
+   ],
+   "time": "2026-11-13T01:10:16Z",
+   "evidence": "Deduced from open-space exits: Rojostormer (SOLT-03) switched to SLOW at 01:27 on 13/11, stopped at Oc 5 / Rc 54 with a healthy hull (16/80) and left his vessel at 02:10; back aboard, he stepped 54, 55, 56 and exited again at 04:00. The spot lies inside the triangles of mrtg-01 (Roxy) and mrts-01 (bartleby); qnxs-01, whose triangle also covers it, is already located at Oc 5 / Rc 77."
   }
  ],
  "players": {

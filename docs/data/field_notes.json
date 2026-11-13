@@ -131,6 +131,18 @@
     "On 13/11 the SOLT-10 crew went back: Horst flew FAST to exactly Rc 77 and exited at 03:23, Roxy followed at 03:36, then nudged out to Rc 83 and back to Rc 77 before exiting again at 06:26. MakerJay exited there a third time at 01:09. Four players, five days, one spot.",
     "How to read exits: most open-space exits are repairs. A vessel that loses a fight with pirates drops to 0 hull and the bot says `is damaged (0/80). You will have to !exit the vessel to !repair it`. A boarding looks different: intact hull, slow approach to an exact Rc, then `!exit`."
    ]
+  },
+  {
+   "id": "FN-015",
+   "date": "2026-11-13",
+   "tag": "Derelicts",
+   "confidence": "likely",
+   "title": "A second derelict at Oc 5 / Rc 54-56",
+   "body": [
+    "On 13/11 Rojostormer (SOLT-03) flew up Oc 4 in FAST, switched to SLOW at 01:27, crossed into Oc 5 and stopped at Rc 54 with a healthy hull (16/80). He left his vessel into open space at 02:10. Back aboard, he moved one SL at a time to Rc 55, then Rc 56, and exited again at 04:00.",
+    "That is the boarding signature (FN-014), not a repair: no lost fight before either exit. The spot lies inside the triangles of mrtg-01 (Roxy) and mrts-01 (bartleby), so it is one of the two; qnxs-01, whose triangle also covers it, is already located at Oc 5 / Rc 77. The two exits two SL apart may be the hull drifting, or a second try at the right Rc.",
+    "Rojostormer and MakerJay fly together: Rojostormer gave MakerJay first aid on 12/11, and MakerJay keeps boarding at Oc 5 / Rc 77."
+   ]
   }
  ]
 }

@@ -349,6 +349,7 @@ class Survey:
             'calibration': self.calibration,
             'stations': sorted(self.stations.values(), key=lambda s: (s['rc'] or 0)),
             'station_log': self.station_log,
+            'contacts': manual.get('contacts', []),
             'players': dict(sorted(self.players.items(), key=lambda kv: kv[0].lower())),
             'fast_jumps': {'samples': len(self.jumps), 'match_law': good,
                            'mismatches': [j for j in self.jumps if j['delta'] != j['law']][:50]},

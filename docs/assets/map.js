@@ -58,6 +58,10 @@
   openTri.forEach(t => byId.set(t.id, {kind: 'open', item: t}));
   vertices.forEach(v => byId.set(v.id, {kind: 'vertex', item: v}));
   P.NAMES.forEach(n => byId.set(`planet-${n}`, {kind: 'planet', item: {name: n}}));
+  const contacts = S.contacts || [];
+  contacts.forEach(c => byId.set(c.id, {kind: 'contact', item: c}));
+  const contactVisible = c => st.layers.hulks && inTime(c.time);
+  const rangeText = c => (c.rc_min != null && c.rc_max != null && c.rc_min !== c.rc_max ? `${c.rc_min}-${c.rc_max}` : `${c.rc}`);
 
   boot.innerHTML = [
     '&gt; ESSI/DSD derelict survey terminal · open-source intelligence from comms channel #spacecraft',
@@ -287,6 +291,20 @@
         });
       }
     }
+    // derelicts located from movements but not tied to one code
+    for (const c of contacts.filter(contactVisible)) {
+      const [x, y] = polarS(c.oc, c.rc), on = st.sel === c.id;
+      out.push(`<g data-id="${c.id}">`);
+      if (on) out.push(`<circle cx="${f1(x)}" cy="${f1(y)}" r="13" fill="none" stroke="var(--accent)" stroke-width="1.4"/>`);
+      out.push(`<rect x="${f1(x - 5.5)}" y="${f1(y - 5.5)}" width="11" height="11" transform="rotate(45 ${f1(x)} ${f1(y)})" fill="var(--bg)" stroke="var(--accent-2)" stroke-width="1.5"/>`);
+      out.push(`<text x="${f1(x)}" y="${f1(y + 3.2)}" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--accent-2)">?</text>`);
+      out.push(`<circle cx="${f1(x)}" cy="${f1(y)}" r="10.5" fill="none" stroke="var(--accent-2)" stroke-width="1.4" stroke-dasharray="3 2"/>`);
+      if (st.layers.labels) {
+        const txt = `unidentified · located ${c.oc}/${rangeText(c)}`, ly = place(x + 16 + txt.length * 3, y + 16, txt.length * 6.3);
+        out.push(`<text x="${f1(x + 16)}" y="${f1(ly)}" font-size="11" fill="${on ? 'var(--accent)' : 'var(--accent-2)'}">${E.esc(txt)}</text>`);
+      }
+      out.push('</g>');
+    }
     layer.innerHTML = out.join('');
     readout.innerHTML = readoutHtml();
   }
@@ -413,6 +431,7 @@
   }
   const planetNow = name => planets().find(p => p.name === name);
   function tipHtml({kind, item}) {
+    if (kind === 'contact') return `<b>Unidentified derelict</b> · probable Oc ${item.oc} / Rc ${rangeText(item)} (${E.esc(item.confidence || '')} confidence)<div>candidates: ${E.esc((item.candidates || []).join(', ') || '?')}</div>`;
     if (kind === 'vertex') {
       const refs = item.refs.filter(refVisible);
       return `<b>Oc ${item.oc} / Rc ${item.rc}</b> <span class="dim">${E.esc(S.sectors[item.oc] || '')}</span>` + refs.map(r =>
@@ -450,6 +469,14 @@
         ['Encrypted data', item.encrypted_data != null ? `+${item.encrypted_data}` : '-'],
         item.code ? ['Enter with', `<code>!enter ${E.esc(item.code)}</code>`] : null,
       ]) + (item.note ? `<p class="note">${E.esc(item.note)}</p>` : '');
+    } else if (kind === 'contact') {
+      dkind.textContent = 'LOCATED CONTACT';
+      detail.innerHTML = '<h3>Unidentified derelict</h3>' + rows([
+        ['Probable position', `Oc ${item.oc} / Rc ${rangeText(item)} · ${E.esc(item.confidence || '')} confidence`],
+        ['Candidates', E.esc((item.candidates || []).join(', ') || '?')],
+        ['First seen', E.fmtTime(item.time, true)],
+        ['Evidence', `<span class="dim">${E.esc(item.evidence || '')}</span>`],
+      ]);
     } else if (kind === 'vertex') {
       dkind.textContent = 'TRIANGULATION POINT';
       detail.innerHTML = `<h3>Oc ${item.oc} / Rc ${item.rc}</h3>` + rows([['Sector', `${item.oc} (${E.esc(S.sectors[item.oc] || '')})`],
@@ -479,6 +506,7 @@
   }
   function focusPoint({kind, item}) {
     if (kind === 'hulk') return polarW(item.pos.oc, item.pos.rc);
+    if (kind === 'contact') return polarW(item.oc, item.rc);
     if (kind === 'planet') { const p = planetNow(item.name); return lonXY(p.lon, Math.min(p.sl, RC_OUT)); }
     if (kind === 'open') return polarW(...item.vertices.at(-1));
     return polarW(item.oc, item.rc);
@@ -537,6 +565,7 @@
       ...hulks.filter(hulkVisible).map(h => ({id: h.id, t: h.time, html: `<span class="mark" style="${markStyle(h)}"></span><span>${E.esc(h.code || 'pending ' + h.cipher)} <span class="k" style="color:${pColor(h.player)}">${E.esc(h.player || '')}</span></span><span class="k">${E.fmtPos(h.pos)}</span>`})),
       ...unanswered.filter(sweepVisible).map(x => ({id: x.id, t: x.time, html: `<span class="mark sweep"></span><span>sweep ? ${E.fmtTime(x.time)}</span><span class="k">${E.fmtPos(x)}</span>`})),
       ...(st.layers.empty ? empties.filter(sweepVisible) : []).map(x => ({id: x.id, t: x.time, html: `<span class="mark nohulk" style="--c:${pColor(x.player)}"></span><span>no derelict ${E.fmtTime(x.time)} <span class="k" style="color:${pColor(x.player)}">${E.esc(x.player || '')}</span></span><span class="k">${E.fmtPos(x)}</span>`})),
+      ...contacts.filter(contactVisible).map(c => ({id: c.id, t: c.time, html: `<span class="mark" style="background:var(--bg);border-color:var(--accent-2)"></span><span>unidentified <span class="k">${E.esc((c.candidates || []).join(' or '))}</span></span><span class="k">Oc ${c.oc} / Rc ${rangeText(c)}</span>`})),
     ].sort((a, b) => (b.t || '').localeCompare(a.t || ''));
     const pl = planets().map(p => ({id: `planet-${p.name}`, html: `<span class="mark planet" style="background:${PLANET_COLORS[p.name]}"></span><span>${p.name}</span><span class="k">Oc ${p.oc} / Rc ${p.rc}</span>`}));
     targets.innerHTML = list.concat(pl).map(t => `<button class="target${t.id === st.sel ? ' on' : ''}" data-id="${t.id}">${t.html}</button>`).join('') || '<p class="empty-state">No target matches the filters.</p>';
@@ -574,6 +603,7 @@
     const e = byId.get(id);
     if (!e) return false;
     if (e.kind === 'hulk') return hulkVisible(e.item);
+    if (e.kind === 'contact') return contactVisible(e.item);
     if (e.kind === 'sweep') return sweepVisible(e.item);
     if (e.kind === 'vertex') return e.item.refs.some(refVisible);
     if (e.kind === 'open') return openVisible(e.item);

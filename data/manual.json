@@ -1,5 +1,5 @@
 {
- "_doc": "Hand-kept public intelligence merged into docs/data/survey.json by tools/build_survey.py. hulks: notes per !enter code, and \"probable\": [oc, rc] with confidence and evidence when a position is deduced. extra_hulks: hulks not visible in the archive (own log). players: facts not readable in #spacecraft. gaps: archive holes. DM reports go to data/private.json (git-ignored).",
+ "_doc": "Hand-kept public intelligence merged into docs/data/survey.json by tools/build_survey.py. hulks: notes per !enter code, and \"probable\": [oc, rc] with confidence and evidence when a position is deduced. extra_hulks: hulks not visible in the archive (own log). players: facts not readable in #spacecraft. contacts: derelicts located from movements but not tied to one code (candidates listed). gaps: archive holes. DM reports go to data/private.json (git-ignored).",
  "hulks": {
   "qnxs-01": {
    "probable": [
@@ -90,5 +90,21 @@
    "source": "AtomicHub follower card"
   }
  },
- "gaps": []
+ "gaps": [],
+ "contacts": [
+  {
+   "id": "contact-5-55",
+   "oc": 5,
+   "rc": 55,
+   "rc_min": 54,
+   "rc_max": 56,
+   "confidence": "high",
+   "candidates": [
+    "mrtg-01",
+    "mrts-01"
+   ],
+   "time": "2026-11-13T01:10:16Z",
+   "evidence": "Deduced from open-space exits: Rojostormer (SOLT-03) switched to SLOW at 01:27 on 13/11, stopped at Oc 5 / Rc 54 with a healthy hull (16/80) and left his vessel at 02:10; back aboard, he stepped 54, 55, 56 and exited again at 04:00. The spot lies inside the triangles of mrtg-01 (Roxy) and mrts-01 (bartleby); qnxs-01, whose triangle also covers it, is already located at Oc 5 / Rc 77."
+  }
+ ]
 }
