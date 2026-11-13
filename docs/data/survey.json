@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-12T09:44:48Z",
+ "generated": "2026-11-13T08:57:50Z",
  "coverage": {
   "from": "2026-08-29T08:36:43Z",
-  "to": "2026-11-12T08:39:35Z",
-  "messages": 8048,
+  "to": "2026-11-13T07:21:23Z",
+  "messages": 8861,
   "gaps": []
  },
  "sectors": {
@@ -60,7 +60,7 @@
     "oc": 5,
     "rc": 77,
     "confidence": "very high",
-    "evidence": "Deduced from open-space exits: bartleby decoded the cipher on 08/11 at 10:47, flew in SLOW to stop exactly on Oc 5 / Rc 77 and left his vessel there at 16:06 with an intact hull; Horst (SOLT-10) exited at the same point 30 min earlier; MakerJay (SOSS-03) made the same precise approach on 11/11 and exited there twice; Roxy's two sweeps at Rc 77 and 82 that day got no reply."
+    "evidence": "Deduced from open-space exits at this exact spot by four players: bartleby decoded the cipher on 08/11 at 10:47, flew in SLOW to stop exactly on Oc 5 / Rc 77 and left his vessel there at 16:06 with an intact hull; Horst (SOLT-10) exited at the same point 30 min earlier; MakerJay (SOSS-03) made the same precise approach on 11/11 and exited there on 11/11, 12/11 and 13/11; on 13/11 Horst came back and exited at 03:23, Roxy at 03:36 and again at 06:26. Roxy's two sweeps at Rc 77 and 82 on 08/11 got no reply."
    },
    "hull_class": null,
    "hull_color": null,
@@ -566,6 +566,46 @@
    "player": "lasergeek",
    "oc": 2,
    "rc": 17,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-12T10:01:55Z",
+   "vessel": "SOLT-04",
+   "player": "lasergeek",
+   "oc": 3,
+   "rc": 10,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-12T11:57:32Z",
+   "vessel": "SOLT-04",
+   "player": "lasergeek",
+   "oc": 4,
+   "rc": 9,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-12T13:28:14Z",
+   "vessel": "SOLT-04",
+   "player": "lasergeek",
+   "oc": 4,
+   "rc": 6,
+   "range": 32,
+   "result": "empty",
+   "text": "No derelict hulks detected within scanner range."
+  },
+  {
+   "time": "2026-11-12T18:40:37Z",
+   "vessel": "SOLT-04",
+   "player": "lasergeek",
+   "oc": 4,
+   "rc": 12,
    "range": 32,
    "result": "empty",
    "text": "No derelict hulks detected within scanner range."
@@ -1076,25 +1116,25 @@
    "name": "Ratropia",
    "oc": 2,
    "rc": 30,
-   "seen": "2026-11-12T03:17:19Z"
+   "seen": "2026-11-12T15:47:37Z"
   },
   {
    "name": "Luna",
    "oc": 2,
    "rc": 30,
-   "seen": "2026-11-12T03:43:00Z"
+   "seen": "2026-11-13T05:37:22Z"
   },
   {
    "name": "Earth Station",
    "oc": 2,
    "rc": 30,
-   "seen": "2026-11-12T04:42:38Z"
+   "seen": "2026-11-13T06:09:21Z"
   },
   {
    "name": "Earth",
    "oc": 2,
    "rc": 30,
-   "seen": "2026-11-12T04:58:50Z"
+   "seen": "2026-11-13T06:21:38Z"
   },
   {
    "name": "Mars Station",
@@ -2020,6 +2060,34 @@
    "oc": 2,
    "rc": 30,
    "source": "orbit insertion"
+  },
+  {
+   "time": "2026-11-12T15:47:37Z",
+   "name": "Ratropia",
+   "oc": 2,
+   "rc": 30,
+   "source": "launch check"
+  },
+  {
+   "time": "2026-11-13T05:37:22Z",
+   "name": "Luna",
+   "oc": 2,
+   "rc": 30,
+   "source": "orbit insertion"
+  },
+  {
+   "time": "2026-11-13T06:09:21Z",
+   "name": "Earth Station",
+   "oc": 2,
+   "rc": 30,
+   "source": "orbit insertion"
+  },
+  {
+   "time": "2026-11-13T06:21:38Z",
+   "name": "Earth",
+   "oc": 2,
+   "rc": 30,
+   "source": "orbit insertion"
   }
  ],
  "players": {
@@ -2064,7 +2132,8 @@
   "Roxy": {
    "name": "Roxy",
    "knw_personal": 0.024,
-   "threshold": 60.024
+   "threshold": 60.024,
+   "vessel": "SOLT-10"
   },
   "Zigm4": {
    "name": "Zigm4",
@@ -2077,8 +2146,8 @@
   }
  },
  "fast_jumps": {
-  "samples": 254,
-  "match_law": 244,
+  "samples": 279,
+  "match_law": 269,
   "mismatches": [
    {
     "from": 109,

@@ -128,6 +128,7 @@
    "body": [
     "bartleby decoded qnxs-01 on 08/11 at 10:47. That afternoon he flew to Rc 78, switched to SLOW (`.31`), stepped to exactly Oc 5 / Rc 77 and left his vessel into open space at 16:06 (`You have disembarked to \"Outer Space\" Zone:0`) with an intact hull. Horst (SOLT-10) had exited at the very same point 30 minutes earlier.",
     "On 11/11 MakerJay (SOSS-03) made the same precise approach (FAST to Rc 78, SLOW, one step to Rc 77, defence lever on) and exited there, then came back injured and exited there again on 12/11. Roxy's sweeps from Rc 77 and 82 on 08/11 got no reply, the usual sign of a hit.",
+    "On 13/11 the SOLT-10 crew went back: Horst flew FAST to exactly Rc 77 and exited at 03:23, Roxy followed at 03:36, then nudged out to Rc 83 and back to Rc 77 before exiting again at 06:26. MakerJay exited there a third time at 01:09. Four players, five days, one spot.",
     "How to read exits: most open-space exits are repairs. A vessel that loses a fight with pirates drops to 0 hull and the bot says `is damaged (0/80). You will have to !exit the vessel to !repair it`. A boarding looks different: intact hull, slow approach to an exact Rc, then `!exit`."
    ]
   }
