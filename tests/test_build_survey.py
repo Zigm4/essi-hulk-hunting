@@ -117,4 +117,11 @@ M2 = {mid(500): msg('⚫ UPBOT ⚫', 'PILOT: HORSTMAN5#0 NOW ORBITING: > EARTH S
 s3 = B.build(M2)
 assert s3['station_log'] == [{'time': s3['station_log'][0]['time'], 'name': 'Earth Station', 'oc': 2, 'rc': 30, 'source': 'orbit insertion'}], s3['station_log']
 print('6 OK game coordinates Oc.RRRRRRRR and orbit insertions logged as station positions')
+priv = {'hulks': {'x-01': {'exact': [7, 120], 'public': False}, 'x-02': {'exact': [8, 60], 'public': True}}}
+assert B.private_fixes(priv) == [(7, 120)]
+sv = {'scans': [{'oc': 7, 'rc': 121}, {'oc': 7, 'rc': 123}, {'oc': 6, 'rc': 120}, {'oc': 8, 'rc': 60}],
+      'station_log': [{'oc': 7, 'rc': 119}, {'oc': None, 'rc': None}]}
+assert B.mask_private(sv, B.private_fixes(priv)) == 2
+assert sv['scans'] == [{'oc': 7, 'rc': 123}, {'oc': 6, 'rc': 120}, {'oc': 8, 'rc': 60}] and sv['station_log'] == [{'oc': None, 'rc': None}]
+print('7 OK observations on a private fix are left out, public fixes are not')
 print('All tests pass.')

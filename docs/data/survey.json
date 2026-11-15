@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-13T09:17:35Z",
+ "generated": "2026-11-15T10:08:04Z",
  "coverage": {
   "from": "2026-08-29T08:36:43Z",
-  "to": "2026-11-13T07:21:23Z",
-  "messages": 8861,
+  "to": "2026-11-15T10:01:46Z",
+  "messages": 9923,
   "gaps": []
  },
  "sectors": {
@@ -1116,7 +1116,7 @@
    "name": "Ratropia",
    "oc": 2,
    "rc": 30,
-   "seen": "2026-11-12T15:47:37Z"
+   "seen": "2026-11-14T22:13:00Z"
   },
   {
    "name": "Luna",
@@ -1164,7 +1164,7 @@
    "name": "Jupiter Station",
    "oc": 5,
    "rc": 164,
-   "seen": "2026-11-11T03:03:45Z"
+   "seen": "2026-11-15T00:11:09Z"
   },
   {
    "name": "Io",
@@ -2088,6 +2088,34 @@
    "oc": 2,
    "rc": 30,
    "source": "orbit insertion"
+  },
+  {
+   "time": "2026-11-14T11:02:43Z",
+   "name": "Ratropia",
+   "oc": 2,
+   "rc": 30,
+   "source": "launch check"
+  },
+  {
+   "time": "2026-11-14T16:50:01Z",
+   "name": "Jupiter Station",
+   "oc": 5,
+   "rc": 164,
+   "source": "launch check"
+  },
+  {
+   "time": "2026-11-14T22:13:00Z",
+   "name": "Ratropia",
+   "oc": 2,
+   "rc": 30,
+   "source": "launch check"
+  },
+  {
+   "time": "2026-11-15T00:11:09Z",
+   "name": "Jupiter Station",
+   "oc": 5,
+   "rc": 164,
+   "source": "launch check"
   }
  ],
  "contacts": [
@@ -2143,7 +2171,7 @@
   },
   "Rojostormer": {
    "name": "Rojostormer",
-   "vessel": "SOLT-03"
+   "vessel": "SOLV-102"
   },
   "Roxy": {
    "name": "Roxy",
@@ -2162,8 +2190,8 @@
   }
  },
  "fast_jumps": {
-  "samples": 279,
-  "match_law": 269,
+  "samples": 310,
+  "match_law": 300,
   "mismatches": [
    {
     "from": 109,

@@ -426,6 +426,29 @@ def merge_manual(manual, private):
     return out
 
 
+MASK_RC = 2   # public observations this close (same Oc) to a private fix are left out of the site
+
+
+def private_fixes(private):
+    """(oc, rc) of every DM fix that is not marked public."""
+    return [tuple(h['exact']) for h in (private.get('hulks') or {}).values()
+            if h.get('exact') and not h.get('public')]
+
+
+def mask_private(survey, fixes, radius=MASK_RC):
+    """Drop sweeps and station marks sitting on a private fix: an unanswered sweep there would point at it.
+    Returns how many items were left out."""
+    def near(o):
+        return any(o.get('oc') == oc and isinstance(o.get('rc'), int) and abs(o['rc'] - rc) <= radius
+                   for oc, rc in fixes)
+    dropped = 0
+    for key in ('scans', 'station_log'):
+        kept = [o for o in survey.get(key) or [] if not near(o)]
+        dropped += len(survey.get(key) or []) - len(kept)
+        survey[key] = kept
+    return dropped
+
+
 def build(messages, manual=None):
     """messages: {id: record}; returns the survey dict."""
     survey = Survey()
@@ -460,6 +483,9 @@ def main(argv=None):
         archive = json.load(f)
     manual = merge_manual(load_json(args.manual), private)
     survey = build(archive['messages'], manual)
+    masked = mask_private(survey, private_fixes(private))
+    if masked:
+        print(f'{masked} observation(s) left out: they sit on a private fix')
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     tmp = args.out + '.tmp'
     with open(tmp, 'w', encoding='utf-8') as f:
